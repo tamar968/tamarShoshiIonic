@@ -19,7 +19,7 @@
   <br>
   <ion-label >בחר מרחק לחיפוש</ion-label>
   <ion-item>
-      <ion-range  [(ngModel)]="distance" min="0" max="200" color="secondary">
+      <ion-range pin="true" [(ngModel)]="distance" min="0" max="200" color="secondary">
         <ion-label slot="start">0</ion-label>
         <ion-label slot="end">200</ion-label>
       </ion-range>

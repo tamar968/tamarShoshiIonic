@@ -42,7 +42,7 @@ export class Tab1Page {
       'מוצרי חשמל',
     ];
     // this.service.getAllCategories().subscribe(res => {
-    //   this.Categories = res.toString();
+    //   this.Categories = res;
     // });
   }
   getCategories(ev: any) {
