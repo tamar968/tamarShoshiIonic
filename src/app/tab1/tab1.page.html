@@ -8,23 +8,23 @@
 
 <ion-content>
   <ion-item>
-    <ion-input type="text" placeholder="מוצר לחיפוש"  [(ngModel)]="item"></ion-input>
+    <ion-input type="text" placeholder="מוצר לחיפוש"  [(ngModel)]="nameProduct"></ion-input>
   </ion-item>
   <ion-searchbar  (ionInput)="getCategories($event)"  [(ngModel)]="category"  placeholder="מקטגוריית"></ion-searchbar>
   <ion-list>
-    <ion-item  *ngFor="let item of Categories" (click)="cateegorySelected(item)">
-      {{ item }}
+    <ion-item  *ngFor="let item of Categories" (click)="categorySelected(item)">
+      {{ item.nameCategory }}
     </ion-item>
   </ion-list>
   <br>
   <ion-label >בחר מרחק לחיפוש</ion-label>
   <ion-item>
-      <ion-range  [(ngModel)]="distance" min="0" max="200" color="secondary">
+      <ion-range  [(ngModel)]="distance" min="0" max="200" color="secondary" pin="true">
         <ion-label slot="start">0</ion-label>
         <ion-label slot="end">200</ion-label>
       </ion-range>
     </ion-item>
 
 
-  <ion-button name="search" fill="outline" expand="block" (click)="searchItem()">חפש מוצר</ion-button>
+  <ion-button name="search" fill="outline" expand="block" (click)="searchItem()">הפעל חיפוש</ion-button>
 </ion-content>

@@ -1,50 +1,36 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ShopService } from '../services/shop.service';
 import { Category } from '../models/Category';
+import { WebResult } from '../models/WebResult';
+import { Search } from '../models/Search';
 
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss']
 })
-export class Tab1Page {
+export class Tab1Page implements OnInit {
   searchQuery: string = '';
-  Categories: any;
-  distance: number;
-  item: string;
-  category:Category;
+  Categories: Category[];
+  distance: number=50;
+  nameProduct: string;
+  category: Category;
   constructor(private service: ShopService) {
     this.initializeCategories();
-
     console.log(this.distance);
 
   }
-
   initializeCategories() {
-    this.Categories = [
-      'בגדי נשים',
-      'בגדי ילדים',
-      'כלי נגינה',
-      'מכשירי כתיבה',
-      'מוצרי מזון',
-      'תכשיטים',
-      'אומנות',
-      'כלי עבודה',
-      'לתינוק ולילד',
-      'יודאיקה',
-      'מחשבים וציוד נלווה',
-      'מצלמות וצילום',
-      'בגדי גברים',
-      'הנעלה',
-      'שעונים ותכשיטים',
-      'קוסמטיקה וטיפוח',
-      'סלולרי',
-      'מוצרי חשמל',
-    ];
-    // this.service.getAllCategories().subscribe(res => {
-    //   this.Categories = res.toString();
-    // });
+    this.service.getAllCategories().subscribe((res: WebResult) => {
+      this.Categories = res.Value;
+    })
   }
+
+  ngOnInit() {
+
+  }
+
+
   getCategories(ev: any) {
     // Reset items back to all of the items
     this.initializeCategories();
@@ -55,17 +41,27 @@ export class Tab1Page {
     // if the value is an empty string don't filter the items
     if (val && val.trim() != '') {
       this.Categories = this.Categories.filter((item) => {
-        return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        return (item.nameCategory.toLowerCase().indexOf(val.toLowerCase()) > -1);
       })
     }
 
   }
-  cateegorySelected(item: any) {
-    this.category=item;
+  categorySelected(item: Category) {
+    this.category = item;
   }
   searchItem() {
     console.log("distance:  " + this.distance);
-    console.log("item to search:  " + this.item);
+    console.log("item to search:  " + this.nameProduct);
     console.log("category:  " + this.category);
+    var search = new Search();
+    search.codeCategory = this.category.codeCategory;
+    search.nameProduct = this.nameProduct;
+    search.status = 0;
+    this.service.runSearch(search).subscribe((res: WebResult) => {
+      if (res.Status == true)
+        alert("Succeed");
+      else
+        alert("Failed");
+    })
   }
 }

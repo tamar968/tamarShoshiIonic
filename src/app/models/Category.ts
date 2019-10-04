@@ -1,4 +1,4 @@
 export class Category{
-   codecategory:number;
+   codeCategory:number;
     nameCategory:string;
 }
