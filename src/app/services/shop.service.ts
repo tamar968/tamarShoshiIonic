@@ -8,14 +8,17 @@ import { Search } from '../models/Search';
 })
 export class ShopService {
   public categoriesForShop: Category[];
-  httpOptions;
+
   private baseUrl = 'http://localhost:55505/';
   constructor(private myHttp: HttpClient) { }
-
+  ngOninit() { }
 
   getAllCategories() {
     return this.myHttp.get(`${this.baseUrl}WebService/Shops/GetAllCategories`);
-  }
+  };
+
+
+
 
   runSearch(search:Search){
     return this.myHttp.post(`${this.baseUrl}WebService/Searches/RunSearch`,search);
@@ -25,5 +28,4 @@ export class ShopService {
     return this.myHttp.get(`${this.baseUrl}WebService/Searches/GetHistory`);
   }
 
-  
 }
