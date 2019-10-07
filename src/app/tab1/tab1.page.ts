@@ -59,15 +59,20 @@ export class Tab1Page implements OnInit {
     console.log("name of category:  " + this.category.nameCategory + "\ncode of category: " + this.category.codeCategory);
 
     this.searchService.getShopsForCategory(this.category.codeCategory).subscribe((res: WebResult) => {
-      this.shopsFromSearch = res.Value;
-      this.shopsFromSearch.forEach(element => {
-        console.log("\n" + element.NameShop + " PhoneShop" + +element.PhoneShop);
-        console.log("\n" + element.NameShop + " Longitude" + +element.Longitude);
-        console.log("\n" + element.NameShop + " Latitude" + +element.Latitude);
-        console.log("\n" + element.NameShop + " FromHour" + +element.FromHour);
-        console.log("\n" + element.NameShop + " ToHour" + +element.ToHour);
-        console.log("\n" + element.NameShop + " AddressString" + +element.AddressString);
-      });
+      if (res.Value != null) {
+        this.shopsFromSearch = res.Value;
+        this.shopsFromSearch.forEach(element => {
+          console.log("\n" + element.NameShop + " PhoneShop " + element.PhoneShop);
+          console.log("\n" + element.NameShop + " Longitude " + element.Longitude);
+          console.log("\n" + element.NameShop + " Latitude " + element.Latitude);
+          console.log("\n" + element.NameShop + " FromHour " + element.FromHour);
+          console.log("\n" + element.NameShop + " ToHour " + element.ToHour);
+          console.log("\n" + element.NameShop + " AddressString " + element.AddressString);
+        });
+      }
+      else{
+        alert(res.Message)
+      }
     })
 
     var search = new Search();
