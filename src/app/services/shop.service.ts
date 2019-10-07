@@ -13,19 +13,6 @@ export class ShopService {
   constructor(private myHttp: HttpClient) { }
   ngOninit() { }
 
-  getAllCategories() {
-    return this.myHttp.get(`${this.baseUrl}WebService/Shops/GetAllCategories`);
-  };
-
-
-
-
-  runSearch(search:Search){
-    return this.myHttp.post(`${this.baseUrl}WebService/Searches/RunSearch`,search);
-  }
-
-  getHistoryForUser(){
-    return this.myHttp.get(`${this.baseUrl}WebService/Searches/GetHistory`);
-  }
+  
 
 }

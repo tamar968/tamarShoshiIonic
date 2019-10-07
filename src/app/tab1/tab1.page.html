@@ -1,29 +1,30 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      חיפוש חדש
+      <ion-icon name="search"></ion-icon>
+      <ion-label> חיפוש חדש</ion-label>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-item>
-    <ion-input type="text" placeholder="מוצר לחיפוש"  [(ngModel)]="nameProduct"></ion-input>
+    <ion-input type="text" placeholder="מוצר לחיפוש" [(ngModel)]="nameProduct"></ion-input>
   </ion-item>
-  <ion-searchbar  (ionInput)="getCategories($event)"  [(ngModel)]="category"  placeholder="מקטגוריית"></ion-searchbar>
+  <ion-searchbar (ionInput)="getCategories($event)" [(ngModel)]="nameCategory" placeholder="מקטגוריית"></ion-searchbar>
   <ion-list>
-    <ion-item  *ngFor="let item of Categories" (click)="categorySelected(item)">
+    <ion-item *ngFor="let item of Categories" (click)="categorySelected(item)">
       {{ item.nameCategory }}
     </ion-item>
   </ion-list>
   <br>
-  <ion-label >בחר מרחק לחיפוש</ion-label>
+  <ion-label>בחר מרחק לחיפוש</ion-label>
   <ion-item>
-      <ion-range  [(ngModel)]="distance" min="0" max="200" color="secondary" pin="true">
-        <ion-label slot="start">0</ion-label>
-        <ion-label slot="end">200</ion-label>
-      </ion-range>
-    </ion-item>
+    <ion-range [(ngModel)]="distance" min="0" max="5000" color="secondary" pin="true">
+      <ion-label slot="start">0 מטר </ion-label>
+      <ion-label slot="end">5000 מטר</ion-label>
+    </ion-range>
+  </ion-item>
 
 
   <ion-button name="search" fill="outline" expand="block" (click)="searchItem()">הפעל חיפוש</ion-button>
