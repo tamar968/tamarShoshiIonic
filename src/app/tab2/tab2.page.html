@@ -7,5 +7,24 @@
 </ion-header>
 
 <ion-content>
+  <ion-fab vertical="top" horizontal="end">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="start">
+      <ion-button (click)="getFound()">נמצאו</ion-button>
+      <ion-button (click)="getNotFound()">לא נמצאו</ion-button>
+      <ion-button (click)="getAll()">הכל</ion-button>
+    </ion-fab-list>
+  </ion-fab>
 
+
+  <ion-list>
+    <ion-item *ngFor="let item of searches">
+      <ion-label><h3>{{item.nameProduct}}</h3></ion-label>
+      <ion-label><p>{{item.nameCategory}}</p></ion-label>
+      <ion-badge color="tertiary">{{item.nameShop}}</ion-badge>
+    </ion-item>
+  </ion-list>
+  
 </ion-content>

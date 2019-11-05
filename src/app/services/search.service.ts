@@ -23,4 +23,12 @@ export class SearchService {
   getHistoryForUser(){
     return this.myHttp.get(`${this.baseUrl}WebService/Searches/GetHistory`);
   }
+
+  getFound(){
+    return this.myHttp.get(`${this.baseUrl}WebService/Searches/GetHistoryFound`);
+  }
+
+  getNotFound(){
+    return this.myHttp.get(`${this.baseUrl}WebService/Searches/GetHistoryNotFound`);
+  }
 }

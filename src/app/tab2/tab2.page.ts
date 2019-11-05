@@ -4,6 +4,7 @@ import { ShopService } from '../services/shop.service';
 import { Search } from '../models/Search';
 import { WebResult } from '../models/WebResult';
 import { SearchService } from '../services/search.service';
+import { SearchDetailsForUser } from '../models/search-details-for-user';
 
 @Component({
   selector: 'app-tab2',
@@ -12,19 +13,33 @@ import { SearchService } from '../services/search.service';
 })
 export class Tab2Page {
   currentImage: any;
-  searches: Search[];
+  searches: SearchDetailsForUser[];
 
   constructor(public photoService: PhotoService, private searchService: SearchService) {  }
 
   ngOnInit() {
     this.photoService.loadSaved();
-    this.getHistory();
+    this.getAll();
   }
-  getHistory() {
+  getAll() {
     this.searchService.getHistoryForUser().subscribe((res:WebResult)=>{
       this.searches=res.Value;
+      console.log(this.searches);
     })
   }
+  getFound(){
+    this.searchService.getFound().subscribe((res:WebResult)=>{
+      this.searches = res.Value;
+      console.log(this.searches);
+    })
+  }
+  getNotFound(){
+    this.searchService.getNotFound().subscribe((res:WebResult)=>{
+      this.searches = res.Value;
+      console.log(this.searches);
+    })
+  }
+
 
 
 }
