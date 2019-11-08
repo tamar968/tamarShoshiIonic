@@ -5,6 +5,7 @@ import { WebResult } from '../models/WebResult';
 import { Search } from '../models/Search';
 import { SearchService } from '../services/search.service';
 import { ShopDetailsForUsers } from '../models/ShopDetailsForUsers';
+import { LocationsService } from '../services/locations.service';
 
 @Component({
   selector: 'app-tab1',
@@ -18,9 +19,10 @@ export class Tab1Page implements OnInit {
   nameProduct: string;
   nameCategory: string;
   category: Category;
-  constructor(private shopService: ShopService, private searchService: SearchService) {
+  constructor(private shopService: ShopService, private searchService: SearchService, private locationsService: LocationsService) {
     this.initializeCategories();
     console.log(this.distance);
+    this.locationsService.distance();
 
   }
   initializeCategories() {
