@@ -6,6 +6,8 @@ import { Search } from '../models/Search';
 import { SearchService } from '../services/search.service';
 import { ShopDetailsForUsers } from '../models/ShopDetailsForUsers';
 import { LocationsService } from '../services/locations.service';
+import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
+
 
 @Component({
   selector: 'app-tab1',
@@ -23,6 +25,9 @@ export class Tab1Page implements OnInit {
     this.initializeCategories();
     console.log(this.distance);
     this.locationsService.distance();
+    //     this.uniqueDeviceID.get()
+//   .then((uuid: any) => this.uuid=uuid)
+//  ;
 
   }
   initializeCategories() {
@@ -33,29 +38,30 @@ export class Tab1Page implements OnInit {
 
   ngOnInit() { }
 
-  getCategories(ev: any) {
+  // getCategories(ev: any) {
 
-    // set val to the value of the searchbar
-    const val = ev.target.value;
+  //   // set val to the value of the searchbar
+  //   const val = ev.target.value;
 
-    // if the value is an empty string don't filter the items
-    if (val && val.trim() != '') {
-      this.Categories = this.Categories.filter((item) => {
-        return (item.nameCategory.toLowerCase().indexOf(val.toLowerCase()) > -1);
-      })
+  //   // if the value is an empty string don't filter the items
+  //   if (val && val.trim() != '') {
+  //     this.Categories = this.Categories.filter((item) => {
+  //       return (item.nameCategory.toLowerCase().indexOf(val.toLowerCase()) > -1);
+  //     })
 
-    }
-    else {
-      // Reset items back to all of the items
-      this.initializeCategories();
-    }
+  //   }
+  //   else {
+  //     // Reset items back to all of the items
+  //     this.initializeCategories();
+  //   }
 
-  }
-  categorySelected(item: Category) {
-    this.category = item;
-    this.nameCategory = item.nameCategory;
-  }
+  // }
+  // categorySelected(item: Category) {
+  //   this.category = item;
+  //   this.nameCategory = item.nameCategory;
+  // }
   searchItem() {
+    this.category.nameCategory = this.nameCategory;
     console.log("distance:  " + this.distance);
     console.log("item to search:  " + this.nameProduct);
     console.log("name of category:  " + this.category.nameCategory + "\ncode of category: " + this.category.codeCategory);

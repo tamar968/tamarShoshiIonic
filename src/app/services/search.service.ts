@@ -2,13 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ShopDetailsForUsers } from '../models/ShopDetailsForUsers';
 import { Search } from '../models/Search';
+
 @Injectable({
   providedIn: 'root'
 })
 export class SearchService {
-  
+  public uuid:string;
   private baseUrl = 'http://localhost:55505/';
-  constructor(private myHttp: HttpClient) { }
+  constructor(private myHttp: HttpClient) {
+
+   }
 
   GetCategories(){
     return this.myHttp.get(`${this.baseUrl}WebService/Searches/GetCategories`);
