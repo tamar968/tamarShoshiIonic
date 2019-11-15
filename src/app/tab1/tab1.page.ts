@@ -26,8 +26,8 @@ export class Tab1Page implements OnInit {
     console.log(this.distance);
     this.locationsService.distance();
     //     this.uniqueDeviceID.get()
-//   .then((uuid: any) => this.uuid=uuid)
-//  ;
+    //   .then((uuid: any) => this.uuid=uuid)
+    //  ;
 
   }
   initializeCategories() {
@@ -56,12 +56,12 @@ export class Tab1Page implements OnInit {
   //   }
 
   // }
-  // categorySelected(item: Category) {
-  //   this.category = item;
-  //   this.nameCategory = item.nameCategory;
-  // }
+  categorySelected(event) {
+    console.log(event.target.value) 
+    // this.category =event.target.value;
+    this.nameCategory = event.target.value;
+  }
   searchItem() {
-    this.category.nameCategory = this.nameCategory;
     console.log("distance:  " + this.distance);
     console.log("item to search:  " + this.nameProduct);
     console.log("name of category:  " + this.category.nameCategory + "\ncode of category: " + this.category.codeCategory);
@@ -78,7 +78,7 @@ export class Tab1Page implements OnInit {
           console.log("\n" + element.NameShop + " AddressString " + element.AddressString);
         });
       }
-      else{
+      else {
         alert(res.Message)
       }
     })

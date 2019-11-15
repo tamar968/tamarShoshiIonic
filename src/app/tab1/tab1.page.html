@@ -26,8 +26,8 @@
 
   <ion-item>
     <ion-label>בחר קטגוריה</ion-label>
-    <ion-select [(ngModel)]="nameCategory" okText="בחר" cancelText="בטל">
-      <ion-select-option *ngFor="let item of Categories" [(ngModel)]="item">{{item.nameCategory}}
+    <ion-select  okText="בחר" cancelText="בטל" (ionChange)="categorySelected($event)">
+      <ion-select-option *ngFor="let item of Categories" >{{item.nameCategory}}
       </ion-select-option>
     </ion-select>
   </ion-item>
