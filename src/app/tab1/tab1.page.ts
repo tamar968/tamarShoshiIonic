@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+  import { Component, OnInit } from '@angular/core';
 import { ShopService } from '../services/shop.service';
 import { Category } from '../models/Category';
 import { WebResult } from '../models/WebResult';
@@ -67,7 +67,6 @@ export class Tab1Page implements OnInit {
     this.category.nameCategory = this.nameCategory.substr(0, this.nameCategory.length - 1);
     this.Categories.forEach((cat) => {
       if (cat.nameCategory == this.category.nameCategory) {
-        debugger;
         this.category = cat;
       }
     });
