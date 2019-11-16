@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      <ion-icon name="search"></ion-icon>
+      <!-- <img alt="logo" height="40" float-left src="../../assets/icon/logo.png" > -->
       <ion-label> חיפוש חדש</ion-label>
     </ion-title>
   </ion-toolbar>
@@ -26,8 +26,8 @@
 
   <ion-item>
     <ion-label>בחר קטגוריה</ion-label>
-    <ion-select  okText="בחר" cancelText="בטל" (ionChange)="categorySelected($event)">
-      <ion-select-option *ngFor="let item of Categories" >{{item.nameCategory}}
+    <ion-select okText="בחר" cancelText="בטל" (ionChange)="categorySelected(this)" [(ngModel)]="nameCategory">
+      <ion-select-option *ngFor="let item of Categories">{{item.nameCategory}}
       </ion-select-option>
     </ion-select>
   </ion-item>

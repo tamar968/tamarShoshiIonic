@@ -56,10 +56,13 @@ export class Tab1Page implements OnInit {
   //   }
 
   // }
-  categorySelected(event) {
-    console.log(event.target.value) 
-    // this.category =event.target.value;
-    this.nameCategory = event.target.value;
+  categorySelected(item) {
+    this.nameCategory = this.nameCategory.substr(0, this.nameCategory.length - 1);
+    this.Categories.forEach((cat) => {
+      if (cat.nameCategory == this.nameCategory) {
+        this.category = cat;
+      }
+    });
   }
   searchItem() {
     console.log("distance:  " + this.distance);
