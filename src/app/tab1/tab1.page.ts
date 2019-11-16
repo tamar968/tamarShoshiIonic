@@ -62,15 +62,20 @@ export class Tab1Page implements OnInit {
   //   }
 
   // }
-  categorySelected(event) {
-    console.log(event.target.value)
-    // this.category =event.target.value;
-    this.category.nameCategory = event.target.value;
+  categorySelected(item) {
+    this.category = new Category;
+    this.category.nameCategory = this.nameCategory.substr(0, this.nameCategory.length - 1);
+    this.Categories.forEach((cat) => {
+      if (cat.nameCategory == this.category.nameCategory) {
+        debugger;
+        this.category = cat;
+      }
+    });
   }
   searchItem() {
     console.log("distance:  " + this.distance);
     console.log("item to search:  " + this.nameProduct);
-    console.log("name of category:  " + this.category.nameCategory + "\ncode of category: " + this.category.codeCategory);
+    console.log("category: " +this.category);
 
     this.searchService.getShopsForCategory(this.category.codeCategory).subscribe((res: WebResult<any>) => {
       if (res.Value != null) {
@@ -97,7 +102,7 @@ export class Tab1Page implements OnInit {
       if (res.Status == true)
         alert("Succeed");
       else
-        alert("Failed");
+        alert(res.Message);
     })
   }
   
