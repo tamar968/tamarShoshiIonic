@@ -22,19 +22,19 @@ export class Tab2Page {
     this.getAll();
   }
   getAll() {
-    this.searchService.getHistoryForUser().subscribe((res:WebResult)=>{
+    this.searchService.getHistoryForUser().subscribe((res:WebResult<SearchDetailsForUser[]>)=>{
       this.searches=res.Value;
       console.log(this.searches);
     })
   }
   getFound(){
-    this.searchService.getFound().subscribe((res:WebResult)=>{
+    this.searchService.getFound().subscribe((res:WebResult<SearchDetailsForUser[]>)=>{
       this.searches = res.Value;
       console.log(this.searches);
     })
   }
   getNotFound(){
-    this.searchService.getNotFound().subscribe((res:WebResult)=>{
+    this.searchService.getNotFound().subscribe((res:WebResult<SearchDetailsForUser[]>)=>{
       this.searches = res.Value;
       console.log(this.searches);
     })

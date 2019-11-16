@@ -7,6 +7,9 @@ import { SearchService } from '../services/search.service';
 import { ShopDetailsForUsers } from '../models/ShopDetailsForUsers';
 import { LocationsService } from '../services/locations.service';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
+import { AlertController } from '@ionic/angular';
+import { AlertOptions } from '@ionic/core';
+import { User } from '../models/user';
 
 
 @Component({
@@ -21,7 +24,8 @@ export class Tab1Page implements OnInit {
   nameProduct: string;
   nameCategory: string;
   category: Category;
-  constructor(private shopService: ShopService, private searchService: SearchService, private locationsService: LocationsService) {
+  constructor(private shopService: ShopService, private searchService: SearchService,
+    private locationsService: LocationsService, private alertCtrl: AlertController) {
     this.initializeCategories();
     console.log(this.distance);
     this.locationsService.distance();
@@ -31,12 +35,14 @@ export class Tab1Page implements OnInit {
 
   }
   initializeCategories() {
-    this.searchService.GetCategories().subscribe((res: WebResult) => {
+    this.searchService.GetCategories().subscribe((res: WebResult<Category[]>) => {
       this.Categories = res.Value;
     })
   }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    
+   }
 
   // getCategories(ev: any) {
 
@@ -57,16 +63,16 @@ export class Tab1Page implements OnInit {
 
   // }
   categorySelected(event) {
-    console.log(event.target.value) 
+    console.log(event.target.value)
     // this.category =event.target.value;
-    this.nameCategory = event.target.value;
+    this.category.nameCategory = event.target.value;
   }
   searchItem() {
     console.log("distance:  " + this.distance);
     console.log("item to search:  " + this.nameProduct);
     console.log("name of category:  " + this.category.nameCategory + "\ncode of category: " + this.category.codeCategory);
 
-    this.searchService.getShopsForCategory(this.category.codeCategory).subscribe((res: WebResult) => {
+    this.searchService.getShopsForCategory(this.category.codeCategory).subscribe((res: WebResult<any>) => {
       if (res.Value != null) {
         this.shopsFromSearch = res.Value;
         this.shopsFromSearch.forEach(element => {
@@ -87,12 +93,12 @@ export class Tab1Page implements OnInit {
     search.codeCategory = this.category.codeCategory;
     search.nameProduct = this.nameProduct;
     search.status = 0;
-    this.searchService.runSearch(search).subscribe((res: WebResult) => {
+    this.searchService.runSearch(search).subscribe((res: WebResult<any>) => {
       if (res.Status == true)
         alert("Succeed");
       else
         alert("Failed");
     })
   }
-
+  
 }

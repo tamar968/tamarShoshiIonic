@@ -1,5 +1,5 @@
-export class WebResult{
+export class WebResult<T>{
     Status:boolean
     Message:string
-    Value:any
+    Value:T
 }

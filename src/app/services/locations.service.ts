@@ -17,7 +17,7 @@ export class LocationsService{
   constructor(private myHttp: HttpClient) { }
   checkDistance(lng,lat){
     var locationAndUser: UserAndLocation = new UserAndLocation();
-    locationAndUser.uuid = "456";
+    locationAndUser.uuid = localStorage.getItem('user');
     locationAndUser.lng = lng;
     locationAndUser.lat = lat;
     return this.myHttp.post(`${this.baseUrl}WebService/Searches/CheckDistance`,locationAndUser);
@@ -31,7 +31,7 @@ export class LocationsService{
         //if the location changed from last time       
         if(this.lng!=this.lastLng||this.lat!=this.lastLat){
           console.log(this.lat + " " + this.lng);
-          this.checkDistance(this.lng, this.lat).subscribe((res: WebResult) => {
+          this.checkDistance(this.lng, this.lat).subscribe((res: WebResult<any>) => {
             //if res.value is not null, then we found a shop
             if(res.Value){
               console.log(res.Value);
