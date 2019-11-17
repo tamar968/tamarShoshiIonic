@@ -1,7 +1,8 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      היסטוריית חיפושים
+      <img alt="logo" src="../../assets/icon/logo.png">
+      <ion-label class="aa"> היסטוריית חיפושים</ion-label>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -18,13 +19,31 @@
     </ion-fab-list>
   </ion-fab>
 
+  <br>
+  <br>
+  <br>
+  <br>
+  
 
   <ion-list>
+    <ion-label class="l">שם מוצר</ion-label>
+    <ion-label class="l">קטגוריה</ion-label>
+    <ion-label class="l">חנות</ion-label>
+    <ion-label class="l">מצב חיפוש</ion-label>
     <ion-item *ngFor="let item of searches">
-      <ion-label><h3>{{item.nameProduct}}</h3></ion-label>
-      <ion-label><p>{{item.nameCategory}}</p></ion-label>
-      <ion-badge color="tertiary">{{item.nameShop}}</ion-badge>
+      <ion-label>
+        <p>{{item.nameProduct}}</p>
+      </ion-label>
+      <ion-label>
+        <p>{{item.nameCategory}}</p>
+      </ion-label>
+      <ion-label>
+        <p>{{item.nameShop}}</p>
+      </ion-label>
+      <ion-label>
+        <p>{{item.status}}</p>
+      </ion-label>
     </ion-item>
   </ion-list>
-  
+
 </ion-content>

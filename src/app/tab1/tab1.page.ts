@@ -1,4 +1,4 @@
-  import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ShopService } from '../services/shop.service';
 import { Category } from '../models/Category';
 import { WebResult } from '../models/WebResult';
@@ -40,9 +40,9 @@ export class Tab1Page implements OnInit {
     })
   }
 
-  ngOnInit() { 
-    
-   }
+  ngOnInit() {
+
+  }
 
   // getCategories(ev: any) {
 
@@ -72,9 +72,10 @@ export class Tab1Page implements OnInit {
     });
   }
   searchItem() {
+    debugger;
     console.log("distance:  " + this.distance);
     console.log("item to search:  " + this.nameProduct);
-    console.log("category: " +this.category);
+    console.log("category: " + this.category);
 
     this.searchService.getShopsForCategory(this.category.codeCategory).subscribe((res: WebResult<any>) => {
       if (res.Value != null) {
@@ -92,7 +93,7 @@ export class Tab1Page implements OnInit {
         alert(res.Message)
       }
     })
-
+    debugger;
     var search = new Search();
     search.codeCategory = this.category.codeCategory;
     search.nameProduct = this.nameProduct;
@@ -104,5 +105,5 @@ export class Tab1Page implements OnInit {
         alert(res.Message);
     })
   }
-  
+
 }

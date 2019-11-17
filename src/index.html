@@ -7,7 +7,8 @@
 
   <base href="/" />
 
-  <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport"
+    content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="format-detection" content="telephone=no" />
   <meta name="msapplication-tap-highlight" content="no" />
 
@@ -19,10 +20,27 @@
 
   <!-- NOTE: To run this app on Ionic DevApp, a reference to cordova.js is needed. 
           Normally, this is automatically added upon executing 'ionic cordova build' commands. -->
-          <script src="http://maps.google.com/maps/api/js?key=AIzaSyDxG3TDFOXmRB5XpG9Yfh40VCs5Aqr93jo"></script>
+  <script src="http://maps.google.com/maps/api/js?key=AIzaSyDxG3TDFOXmRB5XpG9Yfh40VCs5Aqr93jo"></script>
 
   <script src="cordova.js"></script>
 </head>
+<style>
+  .aa {
+    float: left;
+    position: absolute;
+    bottom: 15px;
+  }
+body{
+  color: red;
+}
+  img {
+    height: 40px;
+    float: right;
+    position: absolute;
+    right: 9px;
+    bottom: 2px
+  }
+</style>
 
 <body dir="rtl">
   <app-root></app-root>
