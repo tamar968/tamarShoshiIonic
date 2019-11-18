@@ -28,7 +28,7 @@ export class Tab1Page implements OnInit {
     private locationsService: LocationsService, private alertCtrl: AlertController) {
     this.initializeCategories();
     console.log(this.distance);
-    this.locationsService.distance();
+    //this.locationsService.distance();
     //     this.uniqueDeviceID.get()
     //   .then((uuid: any) => this.uuid=uuid)
     //  ;

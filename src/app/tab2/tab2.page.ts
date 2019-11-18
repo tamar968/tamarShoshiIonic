@@ -38,13 +38,11 @@ export class Tab2Page {
   getFound() {
     this.searchService.getFound().subscribe((res: WebResult<SearchDetailsForUser[]>) => {
       this.searches = res.Value;
-      console.log(this.searches);
     })
   }
   getNotFound() {
     this.searchService.getNotFound().subscribe((res: WebResult<SearchDetailsForUser[]>) => {
       this.searches = res.Value;
-      console.log(this.searches);
     })
   }
   async remove(item: Search) {

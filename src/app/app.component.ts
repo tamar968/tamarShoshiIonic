@@ -7,6 +7,7 @@ import { User } from './models/user';
 import { WebResult } from './models/WebResult';
 import { SearchService } from './services/search.service';
 import { AlertOptions } from '@ionic/core';
+import { LocationsService } from './services/locations.service';
 
 @Component({
   selector: 'app-root',
@@ -18,11 +19,14 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private searchService: SearchService,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private locationsService: LocationsService
   ) {
     this.initializeApp();
     if(localStorage.getItem("user")==null)
-      this.presentAlert()
+      this.presentAlert();
+    else
+      this.locationsService.distance();
   }
 
   initializeApp() {
@@ -79,6 +83,8 @@ export class AppComponent {
              this.searchService.register(this.user)
              .subscribe((res: WebResult<User>) => { 
                console.log(res.Value);
+               //הפעלת הפונקציה שבודקת כל הזמן
+               this.locationsService.distance();
               });
            }
          }
