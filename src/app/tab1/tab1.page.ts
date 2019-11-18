@@ -43,25 +43,6 @@ export class Tab1Page implements OnInit {
   ngOnInit() {
 
   }
-
-  // getCategories(ev: any) {
-
-  //   // set val to the value of the searchbar
-  //   const val = ev.target.value;
-
-  //   // if the value is an empty string don't filter the items
-  //   if (val && val.trim() != '') {
-  //     this.Categories = this.Categories.filter((item) => {
-  //       return (item.nameCategory.toLowerCase().indexOf(val.toLowerCase()) > -1);
-  //     })
-
-  //   }
-  //   else {
-  //     // Reset items back to all of the items
-  //     this.initializeCategories();
-  //   }
-
-  // }
   categorySelected(item) {
     this.category = new Category;
     this.category.nameCategory = this.nameCategory.substr(0, this.nameCategory.length - 1);
@@ -72,13 +53,14 @@ export class Tab1Page implements OnInit {
     });
   }
   searchItem() {
-    debugger;
     console.log("distance:  " + this.distance);
     console.log("item to search:  " + this.nameProduct);
     console.log("category: " + this.category);
 
     this.searchService.getShopsForCategory(this.category.codeCategory).subscribe((res: WebResult<any>) => {
       if (res.Value != null) {
+        this.shopService.shopDetailForUsers=res.Value;
+        debugger;
         this.shopsFromSearch = res.Value;
         this.shopsFromSearch.forEach(element => {
           console.log("\n" + element.NameShop + " PhoneShop " + element.PhoneShop);
@@ -90,7 +72,7 @@ export class Tab1Page implements OnInit {
         });
       }
       else {
-        alert(res.Message)
+        alert(res.Message);
       }
     })
     debugger;

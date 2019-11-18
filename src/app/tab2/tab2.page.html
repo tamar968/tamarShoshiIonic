@@ -9,13 +9,13 @@
 
 <ion-content>
   <ion-fab vertical="top" horizontal="end">
-    <ion-fab-button>
+    <ion-fab-button color="dark" fill="outline">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="start">
-      <ion-button (click)="getFound()">נמצאו</ion-button>
-      <ion-button (click)="getNotFound()">לא נמצאו</ion-button>
-      <ion-button (click)="getAll()">הכל</ion-button>
+      <ion-button color="dark" fill="outline" (click)="getFound()">נמצאו</ion-button>
+      <ion-button color="dark" fill="outline" (click)="getNotFound()">לא נמצאו</ion-button>
+      <ion-button color="dark" fill="outline" (click)="getAll()">הכל</ion-button>
     </ion-fab-list>
   </ion-fab>
 
@@ -23,13 +23,14 @@
   <br>
   <br>
   <br>
-  
+
 
   <ion-list>
-    <ion-label class="l">שם מוצר</ion-label>
+    <ion-label class="l"> מוצר</ion-label>
     <ion-label class="l">קטגוריה</ion-label>
     <ion-label class="l">חנות</ion-label>
-    <ion-label class="l">מצב חיפוש</ion-label>
+    <ion-label class="l">מצב </ion-label>
+    <ion-label class="l">מחק </ion-label>
     <ion-item *ngFor="let item of searches">
       <ion-label>
         <p>{{item.nameProduct}}</p>
@@ -42,6 +43,9 @@
       </ion-label>
       <ion-label>
         <p>{{item.status}}</p>
+      </ion-label>
+      <ion-label >
+        <ion-icon name="trash" md="md-trash" (click)="remove(item)" ></ion-icon>
       </ion-label>
     </ion-item>
   </ion-list>

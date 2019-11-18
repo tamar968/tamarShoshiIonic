@@ -11,32 +11,35 @@ export class SearchService {
   private baseUrl = 'http://localhost:55505/';
   constructor(private myHttp: HttpClient) {
 
-   }
+  }
 
-   currentUserPassword:string = localStorage.getItem('user');
-  GetCategories(){
+  currentUserPassword: string = localStorage.getItem('user');
+  GetCategories() {
     return this.myHttp.get(`${this.baseUrl}WebService/Searches/GetCategories`);
   }
-  getShopsForCategory(codeCategory:number) {
+  getShopsForCategory(codeCategory: number) {
     return this.myHttp.get(`${this.baseUrl}WebService/Searches/getShopsForCategory?codeCategory=${codeCategory}`);
   };
-  runSearch(search:Search){
-    return this.myHttp.post(`${this.baseUrl}WebService/Searches/RunSearch`,{search:search, passwordUser:this.currentUserPassword});
+  runSearch(search: Search) {
+    return this.myHttp.post(`${this.baseUrl}WebService/Searches/RunSearch`, { search: search, passwordUser: this.currentUserPassword });
   }
 
-  getHistoryForUser(){
-    return this.myHttp.post(`${this.baseUrl}WebService/Searches/GetHistory`,this.currentUserPassword);
+  getHistoryForUser() {
+    return this.myHttp.post(`${this.baseUrl}WebService/Searches/GetHistory`, this.currentUserPassword);
   }
 
-  getFound(){
-    return this.myHttp.post(`${this.baseUrl}WebService/Searches/GetHistoryFound`,this.currentUserPassword);
+  getFound() {
+    return this.myHttp.post(`${this.baseUrl}WebService/Searches/GetHistoryFound`, this.currentUserPassword);
   }
 
-  getNotFound(){
-    return this.myHttp.post(`${this.baseUrl}WebService/Searches/GetHistoryNotFound`,this.currentUserPassword);
+  getNotFound() {
+    return this.myHttp.post(`${this.baseUrl}WebService/Searches/GetHistoryNotFound`, this.currentUserPassword);
   }
-  
-  register(user: User){
-    return this.myHttp.post(`${this.baseUrl}WebService/User/Register`,user);
+  Delete(codeSearch:number) {
+    return this.myHttp.get(`${this.baseUrl}WebService/Searches/Delete?codeSearch=${codeSearch}`);
+
+  }
+  register(user: User) {
+    return this.myHttp.post(`${this.baseUrl}WebService/User/Register`, user);
   }
 }

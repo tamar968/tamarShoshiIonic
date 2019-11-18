@@ -1,5 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Subject } from 'rxjs';
+import { ShopDetailsForUsers } from '../models/ShopDetailsForUsers';
+import { ShopService } from '../services/shop.service';
 declare var google;
 
 @Component({
@@ -7,17 +9,15 @@ declare var google;
   templateUrl: 'tab3.page.html',
   styleUrls: ['tab3.page.scss']
 })
-
 export class Tab3Page {
   @ViewChild('map') mapElement: ElementRef;
   private afterViewInitSubject: Subject<any> = new Subject();
-
+  shopsResult: ShopDetailsForUsers[];
   ngAfterViewInit() {
     this.afterViewInitSubject.next(true);
   }
-  constructor() {
+  constructor(private shopsService: ShopService) {
     this.ionViewDidLoad()
-
   }
   map: any;
   ionViewDidLoad() {
@@ -47,10 +47,10 @@ export class Tab3Page {
         }
       })
     }
+
     setTimeout(() => {
       this.addMarker();
-    }, 3000);
-
+    },1000);
   }
   addMarker() {
 
@@ -60,7 +60,7 @@ export class Tab3Page {
       position: this.map.getCenter()
     });
     let content;
-    if (3 < 5) {
+    if (this.shopsService.shopDetailForUsers == null) {
       content = "<h4>YOU ARE HERE</h4>";
     }
     else {
