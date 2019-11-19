@@ -1,7 +1,11 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ShopDetailsForUsers } from '../models/ShopDetailsForUsers';
 import { ShopService } from '../services/shop.service';
+import { SearchService } from '../services/search.service';
+import { WebResult } from '../models/WebResult';
+import { Category } from '../models/Category';
+import { LocationsService } from '../services/locations.service';
 declare var google;
 
 @Component({
@@ -9,77 +13,53 @@ declare var google;
   templateUrl: 'tab3.page.html',
   styleUrls: ['tab3.page.scss']
 })
-export class Tab3Page {
-  @ViewChild('map') mapElement: ElementRef;
-  private afterViewInitSubject: Subject<any> = new Subject();
-  shopsResult: ShopDetailsForUsers[];
-  ngAfterViewInit() {
-    this.afterViewInitSubject.next(true);
-  }
-  constructor(private shopsService: ShopService) {
-    this.ionViewDidLoad()
-  }
-  map: any;
-  ionViewDidLoad() {
-    this.loadMap();
+export class Tab3Page implements OnInit {
+  
+  latitude: number = this.locationsService.lat;
+  longitude: number = this.locationsService.lng;
+  zoom: number = 15;
+  shopsForCategory: ShopDetailsForUsers[];
+  Categories: Category[];
+  nameProduct: string;
+  nameCategory: string;
+  category: Category;
+  
+  constructor(private searchService: SearchService, private locationsService: LocationsService) {
+    this.initializeCategories();
+    this.setCurrentLocation();
   }
 
-  loadMap() {
-    let latLng;// = new google.maps.LatLng(-34.9290, 138.6010);
+  ngOnInit() {
+    
+  }
+
+  // Get Current Location Coordinates
+  private setCurrentLocation() {
     if (navigator) {
-      navigator.geolocation.getCurrentPosition(pos => {
-        latLng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-        // alert(latLng)
-        let mapOptions = {
-          center: latLng,
-          zoom: 15,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        }
-
-        if (this.mapElement) {
-          /* ... */
-          this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-        } else {
-          this.afterViewInitSubject.subscribe(() => {
-            /* ... */
-            this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-          });
-        }
-      })
+      navigator.geolocation.watchPosition((position) => {
+        this.latitude = position.coords.latitude;
+        this.longitude = position.coords.longitude;
+        this.zoom = 15;
+        
+        
+      });
     }
-
-    setTimeout(() => {
-      this.addMarker();
-    }, 4000);
   }
-  addMarker() {
-
-    let marker = new google.maps.Marker({
-      map: this.map,
-      animation: google.maps.Animation.DROP,
-      position: this.map.getCenter()
-    });
-    let content;
-    debugger
-    // if (this.shopsService.shopDetailForUsers == null) {
-    content = "<h4>אתה נמצא כאן</h4>";
-    // }
-    // else {
-    //   content = "<h4>אתה שם</h4>";
-    // }
-
-    this.addInfoWindow(marker, content);
-
+  initializeCategories() {
+    this.searchService.GetCategories().subscribe((res: WebResult<Category[]>) => {
+      this.Categories = res.Value;
+    })
   }
-  addInfoWindow(marker, content) {
-
-    let infoWindow = new google.maps.InfoWindow({
-      content: content
+  categorySelected(item) {
+    this.category = new Category;
+    this.category.nameCategory = this.nameCategory.substr(0, this.nameCategory.length - 1);
+    this.Categories.forEach((cat) => {
+      if (cat.nameCategory == this.category.nameCategory) {
+        this.category = cat;
+      }
     });
-
-    google.maps.event.addListener(marker, 'click', () => {
-      infoWindow.open(this.map, marker);
+    this.searchService.getShopsForCategory(this.category.codeCategory).subscribe((res:WebResult<any>)=>{
+      this.shopsForCategory = res.Value;
     });
-
   }
 }
