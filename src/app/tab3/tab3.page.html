@@ -7,18 +7,27 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-    <ion-item>
-        <ion-label>בחר קטגוריה</ion-label>
-        <ion-select required okText="בחר" cancelText="בטל" (ionChange)="categorySelected(item)" [(ngModel)]="nameCategory">
-          <ion-select-option *ngFor="let item of Categories">{{item.nameCategory}}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
-  <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+  <ion-item>
+    <ion-label>בחר קטגוריה</ion-label>
+    <ion-select required okText="בחר" cancelText="בטל" (ionChange)="categorySelected(item)" [(ngModel)]="nameCategory">
+      <ion-select-option *ngFor="let item of Categories">{{item.nameCategory}}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+  <agm-map [fitBounds]="true" [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
     <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
 
-    <agm-marker  *ngFor="let locationItem of this.shopsForCategory" [latitude]="locationItem.Latitude" 
-    [longitude]="locationItem.Longitude" [label]="{color: 'black', text: locationItem.NameShop}">
+    <agm-marker *ngFor="let locationItem of this.shopsForCategory" [latitude]="locationItem.Latitude"
+      [longitude]="locationItem.Longitude" (markerClick)="clickedMarker(locationItem)">
+      <!--  [label]="{color: 'black', text: locationItem.NameShop}" -->
+      <agm-info-window>
+        {{currentShop.NameShop}}<br>
+        {{currentShop.AddressString}}<br>
+        {{currentShop.PhoneShop}}<br>
+        {{currentShop.FromHour}}<br>
+        {{currentShop.ToHour}}
+
+      </agm-info-window>
     </agm-marker>
   </agm-map>
 

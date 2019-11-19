@@ -14,7 +14,7 @@ declare var google;
   styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page implements OnInit {
-  
+
   latitude: number = this.locationsService.lat;
   longitude: number = this.locationsService.lng;
   zoom: number = 15;
@@ -23,14 +23,14 @@ export class Tab3Page implements OnInit {
   nameProduct: string;
   nameCategory: string;
   category: Category;
-  
+  currentShop: ShopDetailsForUsers=new ShopDetailsForUsers;
   constructor(private searchService: SearchService, private locationsService: LocationsService) {
     this.initializeCategories();
     this.setCurrentLocation();
   }
 
   ngOnInit() {
-    
+
   }
 
   // Get Current Location Coordinates
@@ -40,8 +40,8 @@ export class Tab3Page implements OnInit {
         this.latitude = position.coords.latitude;
         this.longitude = position.coords.longitude;
         this.zoom = 15;
-        
-        
+
+
       });
     }
   }
@@ -58,8 +58,12 @@ export class Tab3Page implements OnInit {
         this.category = cat;
       }
     });
-    this.searchService.getShopsForCategory(this.category.codeCategory).subscribe((res:WebResult<any>)=>{
+    this.searchService.getShopsForCategory(this.category.codeCategory).subscribe((res: WebResult<any>) => {
       this.shopsForCategory = res.Value;
     });
+  }
+  clickedMarker(locationItem: ShopDetailsForUsers) {
+    this.currentShop = locationItem;
+    console.log( this.currentShop)
   }
 }
