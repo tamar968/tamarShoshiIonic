@@ -10,7 +10,7 @@ import { ShopDetailsForUsers } from '../models/ShopDetailsForUsers';
 export class ShopService {
   public categoriesForShop: Category[];
 
-  public shopDetailForUsers: ShopDetailsForUsers[];
+  public shopDetailForUsers: ShopDetailsForUsers[]=[];
 
 
   private baseUrl = 'http://localhost:55505/';

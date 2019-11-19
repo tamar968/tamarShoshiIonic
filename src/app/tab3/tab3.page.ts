@@ -50,7 +50,7 @@ export class Tab3Page {
 
     setTimeout(() => {
       this.addMarker();
-    },1000);
+    }, 4000);
   }
   addMarker() {
 
@@ -60,12 +60,13 @@ export class Tab3Page {
       position: this.map.getCenter()
     });
     let content;
-    if (this.shopsService.shopDetailForUsers == null) {
-      content = "<h4>YOU ARE HERE</h4>";
-    }
-    else {
-      content = "<h4>YOU ARE THERE</h4>";
-    }
+    debugger
+    // if (this.shopsService.shopDetailForUsers == null) {
+    content = "<h4>אתה נמצא כאן</h4>";
+    // }
+    // else {
+    //   content = "<h4>אתה שם</h4>";
+    // }
 
     this.addInfoWindow(marker, content);
 

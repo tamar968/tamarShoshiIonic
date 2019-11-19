@@ -17,7 +17,7 @@ import { AlertOptions } from '@ionic/core';
 export class Tab2Page {
   currentImage: any;
   searches: SearchDetailsForUser[];
-
+  arrayStatus: string[] = [];;
   constructor(public photoService: PhotoService, private searchService: SearchService, private alertCtrl: AlertController) { }
 
   ngOnInit() {
@@ -31,24 +31,41 @@ export class Tab2Page {
       console.log(this.searches);
       this.searches.reverse();
       console.log("after  reverse: ");
-      console.log(this.searches);
-
+      this.changeStatusToString();
     })
   }
   getFound() {
     this.searchService.getFound().subscribe((res: WebResult<SearchDetailsForUser[]>) => {
       this.searches = res.Value;
+      debugger
+      this.changeStatusToString();
+
     })
   }
   getNotFound() {
     this.searchService.getNotFound().subscribe((res: WebResult<SearchDetailsForUser[]>) => {
       this.searches = res.Value;
+      this.changeStatusToString();
+
     })
+  }
+  changeStatusToString() {
+    while ( this.arrayStatus.length) {
+      this.arrayStatus.pop();
+    }
+    this.searches.forEach(element => {
+      if (element.status == 1) {
+        this.arrayStatus.push("נמצא");
+      }
+      else {
+        this.arrayStatus.push("מחפש");
+      }
+    });
   }
   async remove(item: Search) {
     const alert = await this.alertCtrl.create(<AlertOptions>{
       title: 'מחיקת חיפוש',
-      message:`<h3> האם אתה בטוח במחיקת חיפוש ה${item.nameProduct}?</h3>`,
+      message: `<h3> האם אתה בטוח במחיקת חיפוש ה${item.nameProduct}?</h3>`,
       buttons: [
         {
           text: 'לא',

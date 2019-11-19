@@ -9,7 +9,7 @@
 
 <ion-content>
   <ion-fab vertical="top" horizontal="end">
-    <ion-fab-button color="dark" fill="outline">
+    <ion-fab-button color="dark" fill="outline" title="סנן">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="start">
@@ -31,21 +31,23 @@
     <ion-label class="l">חנות</ion-label>
     <ion-label class="l">מצב </ion-label>
     <ion-label class="l">מחק </ion-label>
-    <ion-item *ngFor="let item of searches">
+    <ion-item *ngFor="let item of searches ;let i=index">
       <ion-label>
-        <p>{{item.nameProduct}}</p>
+        <p title="{{item.nameProduct}}">{{item.nameProduct}}</p>
       </ion-label>
       <ion-label>
-        <p>{{item.nameCategory}}</p>
+        <p title="{{item.nameCategory}}">{{item.nameCategory}}</p>
       </ion-label>
       <ion-label>
-        <p>{{item.nameShop}}</p>
+        <p title="{{item.nameShop}}">{{item.nameShop}}</p>
       </ion-label>
       <ion-label>
-        <p>{{item.status}}</p>
+        <p>{{arrayStatus[i]}}</p>
       </ion-label>
-      <ion-label >
-        <ion-icon name="trash" md="md-trash" (click)="remove(item)" ></ion-icon>
+      <ion-label>
+        <ion-button border-color="white" fill="outline" color="medium" (click)="remove(item)">
+          <ion-icon name="trash" md="md-trash"></ion-icon>
+        </ion-button>
       </ion-label>
     </ion-item>
   </ion-list>

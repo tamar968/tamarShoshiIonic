@@ -59,7 +59,7 @@ export class Tab1Page implements OnInit {
 
     this.searchService.getShopsForCategory(this.category.codeCategory).subscribe((res: WebResult<any>) => {
       if (res.Value != null) {
-        this.shopService.shopDetailForUsers=res.Value;
+        this.shopService.shopDetailForUsers = res.Value;
         debugger;
         this.shopsFromSearch = res.Value;
         this.shopsFromSearch.forEach(element => {
@@ -81,8 +81,10 @@ export class Tab1Page implements OnInit {
     search.nameProduct = this.nameProduct;
     search.status = 0;
     this.searchService.runSearch(search).subscribe((res: WebResult<any>) => {
-      if (res.Status == true)
+      if (res.Status == true) {
         alert("Succeed");
+        this.searchService.getHistoryForUser()
+      }
       else
         alert(res.Message);
     })
