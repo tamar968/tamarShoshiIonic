@@ -14,9 +14,9 @@ export class LocationsService {
   private baseUrl = 'http://localhost:55505/';
   lng: any;
   lat: any;
-  lastLng: any = 0;
-  lastLat: any = 0;
-  constructor(private myHttp: HttpClient, private alertCtrl: AlertController,) { }
+  
+  constructor(private myHttp: HttpClient, private alertCtrl: AlertController, ) { }
+  
   checkDistance(lng, lat) {
     var locationAndUser: UserAndLocation = new UserAndLocation();
     locationAndUser.uuid = localStorage.getItem('user');
@@ -25,33 +25,28 @@ export class LocationsService {
     return this.myHttp.post(`${this.baseUrl}WebService/Searches/CheckDistance`, locationAndUser);
   }
   async distance() {
-    //setInterval(function(){
     if (navigator) {
-      navigator.geolocation.getCurrentPosition(pos => {
+      navigator.geolocation.watchPosition(pos => {
         this.lng = +pos.coords.longitude;
         this.lat = +pos.coords.latitude;
-        //if the location changed from last time       
-        if (this.lng != this.lastLng || this.lat != this.lastLat) {
+       
           console.log(this.lat + " " + this.lng);
           this.checkDistance(this.lng, this.lat).subscribe((res: WebResult<any>) => {
             //if res.value is not null, then we found a shop
+
             if (res.Value) {
               console.log(res.Value);
               this.presentAlert(res.Value);
             }
-            this.lastLng = this.lng;
-            this.lastLat = this.lat;
           })
-        }
       });
     }
-    //}, 3000);
   }
 
   //popup for finding shop
   async presentAlert(searchInShop: SearchInShop) {
     const alert = await this.alertCtrl.create(<AlertOptions>{
-      header: ' קנה כאן!'+searchInShop.NameProduct,
+      header: ' קנה כאן!' + searchInShop.NameProduct,
       message: searchInShop.NameShop,
       buttons: [
         {
@@ -64,8 +59,8 @@ export class LocationsService {
         {
           text: 'קניתי',
           handler: () => {
-            console.log('Buy clicked'+searchInShop.MailShop);
-            this.foundSearch(searchInShop.CodeSearch, searchInShop.MailShop).subscribe(res=>{
+            console.log('Buy clicked' + searchInShop.MailShop);
+            this.foundSearch(searchInShop.CodeSearch, searchInShop.MailShop).subscribe(res => {
               console.log("Bought");
             });
           }
@@ -74,7 +69,7 @@ export class LocationsService {
     });
     await alert.present();
   }
-  foundSearch(codeSearch, mailShop){
-    return this.myHttp.post(`${this.baseUrl}WebService/Searches/Found`, {codeSearch:codeSearch, mailShop:mailShop});
+  foundSearch(codeSearch, mailShop) {
+    return this.myHttp.post(`${this.baseUrl}WebService/Searches/Found`, { codeSearch: codeSearch, mailShop: mailShop });
   }
 }

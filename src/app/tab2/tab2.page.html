@@ -31,7 +31,7 @@
     <ion-label class="l">חנות</ion-label>
     <ion-label class="l">מצב </ion-label>
     <ion-label class="l">מחק </ion-label>
-    <ion-item *ngFor="let item of searches ;let i=index">
+    <ion-item *ngFor="let item of this.searchService.searchesForHistory ;let i=index">
       <ion-label>
         <p title="{{item.nameProduct}}">{{item.nameProduct}}</p>
       </ion-label>

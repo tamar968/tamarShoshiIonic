@@ -74,20 +74,25 @@ export class Tab1Page implements OnInit {
       else {
         alert(res.Message);
       }
+      var search = new Search();
+      search.codeCategory = this.category.codeCategory;
+      search.nameProduct = this.nameProduct;
+      search.status = 0;
+      this.searchService.runSearch(search).subscribe((res: WebResult<any>) => {
+        if (res.Status == true) {
+          alert("Succeed");
+          this.searchService.getHistoryForUser().subscribe((res: WebResult<any>) => {
+            this.searchService.searchesForHistory = res.Value;
+            this.locationsService.distance();
+          })
+
+        }
+        else
+          alert(res.Message);
+      })
     })
-    debugger;
-    var search = new Search();
-    search.codeCategory = this.category.codeCategory;
-    search.nameProduct = this.nameProduct;
-    search.status = 0;
-    this.searchService.runSearch(search).subscribe((res: WebResult<any>) => {
-      if (res.Status == true) {
-        alert("Succeed");
-        this.searchService.getHistoryForUser()
-      }
-      else
-        alert(res.Message);
-    })
+
+
   }
 
 }

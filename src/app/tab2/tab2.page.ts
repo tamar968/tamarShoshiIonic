@@ -16,7 +16,7 @@ import { AlertOptions } from '@ionic/core';
 })
 export class Tab2Page {
   currentImage: any;
-  searches: SearchDetailsForUser[];
+  
   arrayStatus: string[] = [];;
   constructor(public photoService: PhotoService, private searchService: SearchService, private alertCtrl: AlertController) { }
 
@@ -26,17 +26,17 @@ export class Tab2Page {
   }
   getAll() {
     this.searchService.getHistoryForUser().subscribe((res: WebResult<SearchDetailsForUser[]>) => {
-      this.searches = res.Value;
+      this.searchService.searchesForHistory = res.Value;
       console.log("before reverse :");
-      console.log(this.searches);
-      this.searches.reverse();
+      console.log(this.searchService.searchesForHistory);
+      this.searchService.searchesForHistory.reverse();
       console.log("after  reverse: ");
       this.changeStatusToString();
     })
   }
   getFound() {
     this.searchService.getFound().subscribe((res: WebResult<SearchDetailsForUser[]>) => {
-      this.searches = res.Value;
+      this.searchService.searchesForHistory = res.Value;
       debugger
       this.changeStatusToString();
 
@@ -44,7 +44,7 @@ export class Tab2Page {
   }
   getNotFound() {
     this.searchService.getNotFound().subscribe((res: WebResult<SearchDetailsForUser[]>) => {
-      this.searches = res.Value;
+      this.searchService.searchesForHistory = res.Value;
       this.changeStatusToString();
 
     })
@@ -53,7 +53,7 @@ export class Tab2Page {
     while ( this.arrayStatus.length) {
       this.arrayStatus.pop();
     }
-    this.searches.forEach(element => {
+    this.searchService.searchesForHistory.forEach(element => {
       if (element.status == 1) {
         this.arrayStatus.push("נמצא");
       }

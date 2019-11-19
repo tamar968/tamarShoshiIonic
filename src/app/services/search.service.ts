@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ShopDetailsForUsers } from '../models/ShopDetailsForUsers';
 import { Search } from '../models/Search';
 import { User } from '../models/user';
+import { SearchDetailsForUser } from '../models/search-details-for-user';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,8 @@ export class SearchService {
   }
 
   currentUserPassword: string = localStorage.getItem('user');
+  searchesForHistory: SearchDetailsForUser[];
+
   GetCategories() {
     return this.myHttp.get(`${this.baseUrl}WebService/Searches/GetCategories`);
   }
