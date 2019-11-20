@@ -6,6 +6,7 @@ import { SearchService } from '../services/search.service';
 import { WebResult } from '../models/WebResult';
 import { Category } from '../models/Category';
 import { LocationsService } from '../services/locations.service';
+import { ToastController } from '@ionic/angular';
 declare var google;
 
 @Component({
@@ -23,8 +24,10 @@ export class Tab3Page implements OnInit {
   nameProduct: string;
   nameCategory: string;
   category: Category;
-  currentShop: ShopDetailsForUsers=new ShopDetailsForUsers;
-  constructor(private searchService: SearchService, private locationsService: LocationsService) {
+  currentShop: ShopDetailsForUsers = new ShopDetailsForUsers;
+  previous;
+
+  constructor(private searchService: SearchService, private locationsService: LocationsService, public toastController: ToastController) {
     this.initializeCategories();
     this.setCurrentLocation();
   }
@@ -59,11 +62,28 @@ export class Tab3Page implements OnInit {
       }
     });
     this.searchService.getShopsForCategory(this.category.codeCategory).subscribe((res: WebResult<any>) => {
-      this.shopsForCategory = res.Value;
+      if (res.Value == null) {
+        this.presentToast();
+      }
+      else
+        this.shopsForCategory = res.Value;
     });
   }
-  clickedMarker(locationItem: ShopDetailsForUsers) {
+  clickedMarker(locationItem: ShopDetailsForUsers, infowindow) {
     this.currentShop = locationItem;
-    console.log( this.currentShop)
+    if (this.previous) {
+      this.previous.close();
+    }
+    this.previous = infowindow;
+    console.log(this.currentShop)
+  }
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: "לא נמצאו חנויות שמוכרות את הקטגוריה הזו",
+      color: "danger",
+      duration: 2500,
+      position: 'middle'
+    });
+    toast.present();
   }
 }

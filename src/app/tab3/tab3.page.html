@@ -15,18 +15,36 @@
     </ion-select>
   </ion-item>
   <agm-map [fitBounds]="true" [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
-    <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+    <agm-marker [agmFitBounds]="true" [latitude]="latitude" [longitude]="longitude" [iconUrl]="
+    {
+      url: '../assets/icon/location.png',
+      scaledSize: {
+          width: 50,
+          height: 50
+      }
+  }">
 
-    <agm-marker *ngFor="let locationItem of this.shopsForCategory" [latitude]="locationItem.Latitude"
-      [longitude]="locationItem.Longitude" (markerClick)="clickedMarker(locationItem)">
+      <agm-info-window>אתה נמצא כאן</agm-info-window>
+    </agm-marker>
+
+    <agm-marker [agmFitBounds]="true" *ngFor="let locationItem of this.shopsForCategory"
+      [latitude]="locationItem.Latitude" [longitude]="locationItem.Longitude"
+      (markerClick)="clickedMarker(locationItem,infowindow)" [iconUrl]="
+    {
+      url: '../assets/icon/shop.png',
+      scaledSize: {
+          width: 50,
+          height: 50
+      }
+  }">
       <!--  [label]="{color: 'black', text: locationItem.NameShop}" -->
-      <agm-info-window>
-        {{currentShop.NameShop}}<br>
-        {{currentShop.AddressString}}<br>
-        {{currentShop.PhoneShop}}<br>
-        {{currentShop.FromHour}}<br>
-        {{currentShop.ToHour}}
-
+      <agm-info-window #infowindow>
+        <ins>
+          <p style="text-align: center;"> {{currentShop.NameShop}}</p>
+        </ins>
+        <p style="text-align: center;"> {{currentShop.AddressString}}</p>
+        <p style="text-align: center;"> {{currentShop.PhoneShop}}</p>
+        <p style="text-align: center;"> {{currentShop.FromHour}}-{{currentShop.ToHour}}</p>
       </agm-info-window>
     </agm-marker>
   </agm-map>
