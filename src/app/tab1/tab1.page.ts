@@ -7,7 +7,7 @@ import { SearchService } from '../services/search.service';
 import { ShopDetailsForUsers } from '../models/ShopDetailsForUsers';
 import { LocationsService } from '../services/locations.service';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 import { AlertOptions } from '@ionic/core';
 import { User } from '../models/user';
 
@@ -21,12 +21,12 @@ export class Tab1Page implements OnInit {
   shopsFromSearch: ShopDetailsForUsers[];
   Categories: Category[];
   distance: number = 50;
-  nameProduct: string;
+  nameProduct: string = "";
   nameCategory: string;
   category: Category;
   constructor(private shopService: ShopService, private searchService: SearchService,
-    private locationsService: LocationsService, private alertCtrl: AlertController) {
-    this.initializeCategories();
+    private locationsService: LocationsService, private alertCtrl: AlertController, private toastCtrl : ToastController) {
+      
     console.log(this.distance);
     //this.locationsService.distance();
     //     this.uniqueDeviceID.get()
@@ -41,7 +41,7 @@ export class Tab1Page implements OnInit {
   }
 
   ngOnInit() {
-
+    this.initializeCategories();
   }
   categorySelected(item) {
     this.category = new Category;
@@ -53,9 +53,10 @@ export class Tab1Page implements OnInit {
     });
   }
   searchItem() {
-    console.log("distance:  " + this.distance);
-    console.log("item to search:  " + this.nameProduct);
-    console.log("category: " + this.category);
+    if(this.nameProduct == "" || this.category == null){
+      this.presentToastDanger();
+      return;
+    }
 
     this.searchService.getShopsForCategory(this.category.codeCategory).subscribe((res: WebResult<any>) => {
       if (res.Value != null) {
@@ -81,18 +82,41 @@ export class Tab1Page implements OnInit {
       search.distance = this.distance;
       this.searchService.runSearch(search).subscribe((res: WebResult<any>) => {
         if (res.Status == true) {
-          alert("Succeed");
+          this.presentToastSuccess();
           this.searchService.getHistoryForUser().subscribe((res: WebResult<any>) => {
             this.searchService.searchesForHistory = res.Value;
           })
+          //reset the form
+          this.category = null;
+          this.distance = 50;
+          this.nameCategory ="";
+          this.nameProduct = "";
 
         }
         else
-          alert(res.Message);
+          console.log(res.Message);
       })
     })
 
 
+  }
+  async presentToastSuccess() {
+    const toast = await this.toastCtrl.create({
+      message: 'חיפוש הופעל',
+      color: "success",
+      duration: 2000,
+      position: 'top',
+    });
+    toast.present();
+  }
+  async presentToastDanger() {
+    const toast = await this.toastCtrl.create({
+      message: 'לא הוזנו נתונים מספיקים',
+      color: "danger",
+      duration: 2000,
+      position: 'top',
+    });
+    toast.present();
   }
 
 }

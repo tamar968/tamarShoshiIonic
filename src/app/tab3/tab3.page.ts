@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { ShopDetailsForUsers } from '../models/ShopDetailsForUsers';
 import { ShopService } from '../services/shop.service';
 import { SearchService } from '../services/search.service';
@@ -18,7 +18,7 @@ export class Tab3Page implements OnInit {
 
   latitude: number = this.locationsService.lat;
   longitude: number = this.locationsService.lng;
-  zoom: number = 15;
+  zoom: number = 50;
   shopsForCategory: ShopDetailsForUsers[];
   Categories: Category[];
   nameProduct: string;
@@ -26,10 +26,15 @@ export class Tab3Page implements OnInit {
   category: Category;
   currentShop: ShopDetailsForUsers = new ShopDetailsForUsers;
   previous;
+  subscription: Subscription;
 
   constructor(private searchService: SearchService, private locationsService: LocationsService, public toastController: ToastController) {
     this.initializeCategories();
     this.setCurrentLocation();
+    this.subscription = this.locationsService.locationChange.subscribe(value => {
+       this.latitude = value.lat ;
+       this.longitude = value.lng;
+       });
   }
 
   ngOnInit() {
@@ -38,15 +43,18 @@ export class Tab3Page implements OnInit {
 
   // Get Current Location Coordinates
   private setCurrentLocation() {
-    if (navigator) {
-      navigator.geolocation.watchPosition((position) => {
-        this.latitude = position.coords.latitude;
-        this.longitude = position.coords.longitude;
-        this.zoom = 15;
+    // if (navigator) {
+    //   navigator.geolocation.watchPosition((position) => {
+    //     this.latitude = position.coords.latitude;
+    //     this.longitude = position.coords.longitude;
+    //     this.zoom = 50;
 
 
-      });
-    }
+    //   });
+    // }
+    this.latitude = this.locationsService.lat;
+    this.longitude = this.locationsService.lng;
+    this.zoom = 50;
   }
   initializeCategories() {
     this.searchService.GetCategories().subscribe((res: WebResult<Category[]>) => {
