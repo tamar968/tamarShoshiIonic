@@ -6,7 +6,8 @@ import { AlertController } from '@ionic/angular';
 import { AlertOptions } from '@ionic/core';
 import { ShopDetailsForUsers } from '../models/ShopDetailsForUsers';
 import { SearchInShop } from '../models/search-in-shop';
-import { stringify } from 'querystring';
+import { SearchDetailsForUser } from '../models/search-details-for-user';
+import { SearchService } from './search.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +17,8 @@ export class LocationsService {
   lng: any;
   lat: any;
   strings: string
-  constructor(private myHttp: HttpClient, private alertCtrl: AlertController, ) { }
-
+  constructor(private myHttp: HttpClient, private alertCtrl: AlertController, private searchService: SearchService) { }
+  
   checkDistance(lng, lat) {
     var locationAndUser: UserAndLocation = new UserAndLocation();
     locationAndUser.uuid = localStorage.getItem('user');

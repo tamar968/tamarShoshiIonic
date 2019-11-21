@@ -79,13 +79,11 @@ export class Tab1Page implements OnInit {
       search.nameProduct = this.nameProduct;
       search.status = 0;
       search.distance = this.distance;
-      debugger
       this.searchService.runSearch(search).subscribe((res: WebResult<any>) => {
         if (res.Status == true) {
           this.presentToast();
           this.searchService.getHistoryForUser().subscribe((res: WebResult<any>) => {
             this.searchService.searchesForHistory = res.Value;
-            this.locationsService.distance();
           })
 
         }

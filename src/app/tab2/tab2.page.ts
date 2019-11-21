@@ -18,11 +18,13 @@ export class Tab2Page {
   currentImage: any;
   
   arrayStatus: string[] = [];;
-  constructor(public photoService: PhotoService, private searchService: SearchService, private alertCtrl: AlertController) { }
+  constructor(public photoService: PhotoService, private searchService: SearchService, private alertCtrl: AlertController) { 
+ 
+  }
 
   ngOnInit() {
     this.photoService.loadSaved();
-    this.getAll();
+       this.getAll();
   }
   getAll() {
     this.searchService.getHistoryForUser().subscribe((res: WebResult<SearchDetailsForUser[]>) => {
