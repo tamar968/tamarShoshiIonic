@@ -84,7 +84,6 @@ export class Tab1Page implements OnInit {
           alert("Succeed");
           this.searchService.getHistoryForUser().subscribe((res: WebResult<any>) => {
             this.searchService.searchesForHistory = res.Value;
-            this.locationsService.distance();
           })
 
         }
