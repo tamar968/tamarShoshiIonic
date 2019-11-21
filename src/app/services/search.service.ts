@@ -13,8 +13,10 @@ export class SearchService {
   constructor(private myHttp: HttpClient) {
 
   }
-
-  currentUserPassword: string = localStorage.getItem('user');
+  currentUserPassword()
+  {
+return localStorage.getItem('user');
+  }
   searchesForHistory: SearchDetailsForUser[];
 
   GetCategories() {
@@ -24,19 +26,20 @@ export class SearchService {
     return this.myHttp.get(`${this.baseUrl}WebService/Searches/getShopsForCategory?codeCategory=${codeCategory}`);
   };
   runSearch(search: Search) {
-    return this.myHttp.post(`${this.baseUrl}WebService/Searches/RunSearch`, { search: search, passwordUser: this.currentUserPassword });
+    return this.myHttp.post(`${this.baseUrl}WebService/Searches/RunSearch`, { search: search, passwordUser: this.currentUserPassword() });
   }
 
   getHistoryForUser() {
-    return this.myHttp.post(`${this.baseUrl}WebService/Searches/GetHistory`, this.currentUserPassword);
+
+    return this.myHttp.post(`${this.baseUrl}WebService/Searches/GetHistory`, this.currentUserPassword());
   }
 
   getFound() {
-    return this.myHttp.post(`${this.baseUrl}WebService/Searches/GetHistoryFound`, this.currentUserPassword);
+    return this.myHttp.post(`${this.baseUrl}WebService/Searches/GetHistoryFound`, this.currentUserPassword());
   }
 
   getNotFound() {
-    return this.myHttp.post(`${this.baseUrl}WebService/Searches/GetHistoryNotFound`, this.currentUserPassword);
+    return this.myHttp.post(`${this.baseUrl}WebService/Searches/GetHistoryNotFound`, this.currentUserPassword());
   }
   Delete(codeSearch:number) {
     return this.myHttp.get(`${this.baseUrl}WebService/Searches/Delete?codeSearch=${codeSearch}`);

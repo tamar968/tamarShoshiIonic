@@ -45,8 +45,8 @@
         <p>{{arrayStatus[i]}}</p>
       </ion-label>
       <ion-label>
-        <ion-button border-color="white" fill="outline" color="medium" (click)="remove(item)">
-          <ion-icon name="trash" md="md-trash"></ion-icon>
+        <ion-button id="b" fill="clear" color="medium" (click)="remove(item)">
+          <ion-icon name="trash" slot="icon-only" md="md-trash"></ion-icon>
         </ion-button>
       </ion-label>
     </ion-item>

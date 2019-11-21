@@ -6,6 +6,7 @@ import { SearchService } from '../services/search.service';
 import { WebResult } from '../models/WebResult';
 import { Category } from '../models/Category';
 import { LocationsService } from '../services/locations.service';
+import { ToastController } from '@ionic/angular';
 declare var google;
 
 @Component({
@@ -14,7 +15,7 @@ declare var google;
   styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page implements OnInit {
-  
+
   latitude: number = this.locationsService.lat;
   longitude: number = this.locationsService.lng;
   zoom: number = 15;
@@ -23,14 +24,16 @@ export class Tab3Page implements OnInit {
   nameProduct: string;
   nameCategory: string;
   category: Category;
-  
-  constructor(private searchService: SearchService, private locationsService: LocationsService) {
+  currentShop: ShopDetailsForUsers = new ShopDetailsForUsers;
+  previous;
+
+  constructor(private searchService: SearchService, private locationsService: LocationsService, public toastController: ToastController) {
     this.initializeCategories();
     this.setCurrentLocation();
   }
 
   ngOnInit() {
-    
+
   }
 
   // Get Current Location Coordinates
@@ -40,8 +43,8 @@ export class Tab3Page implements OnInit {
         this.latitude = position.coords.latitude;
         this.longitude = position.coords.longitude;
         this.zoom = 15;
-        
-        
+
+
       });
     }
   }
@@ -58,8 +61,29 @@ export class Tab3Page implements OnInit {
         this.category = cat;
       }
     });
-    this.searchService.getShopsForCategory(this.category.codeCategory).subscribe((res:WebResult<any>)=>{
-      this.shopsForCategory = res.Value;
+    this.searchService.getShopsForCategory(this.category.codeCategory).subscribe((res: WebResult<any>) => {
+      if (res.Value == null) {
+        this.presentToast();
+      }
+      else
+        this.shopsForCategory = res.Value;
     });
+  }
+  clickedMarker(locationItem: ShopDetailsForUsers, infowindow) {
+    this.currentShop = locationItem;
+    if (this.previous) {
+      this.previous.close();
+    }
+    this.previous = infowindow;
+    console.log(this.currentShop)
+  }
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: "לא נמצאו חנויות שמוכרות את הקטגוריה הזו",
+      color: "danger",
+      duration: 2500,
+      position: 'middle'
+    });
+    toast.present();
   }
 }
