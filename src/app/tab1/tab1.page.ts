@@ -60,46 +60,35 @@ export class Tab1Page implements OnInit {
     this.searchService.getShopsForCategory(this.category.codeCategory).subscribe((res: WebResult<any>) => {
       if (res.Value != null) {
         this.shopService.shopDetailForUsers = res.Value;
-        debugger;
         this.shopsFromSearch = res.Value;
-        this.shopsFromSearch.forEach(element => {
-          console.log("\n" + element.NameShop + " PhoneShop " + element.PhoneShop);
-          console.log("\n" + element.NameShop + " Longitude " + element.Longitude);
-          console.log("\n" + element.NameShop + " Latitude " + element.Latitude);
-          console.log("\n" + element.NameShop + " FromHour " + element.FromHour);
-          console.log("\n" + element.NameShop + " ToHour " + element.ToHour);
-          console.log("\n" + element.NameShop + " AddressString " + element.AddressString);
+        var search = new Search();
+        search.codeCategory = this.category.codeCategory;
+        search.nameProduct = this.nameProduct;
+        search.status = 0;
+        search.distance = this.distance;
+        this.searchService.runSearch(search).subscribe((res: WebResult<any>) => {
+          if (res.Status == true) {
+            this.presentToast(res.Message);
+            this.searchService.getHistoryForUser().subscribe((res: WebResult<any>) => {
+              this.searchService.searchesForHistory = res.Value;
+            })
+
+          }
+          else
+            this.presentToast(res.Message);
         });
       }
       else {
-        alert(res.Message);
+        this.presentToast(res.Message);
       }
-      var search = new Search();
-      search.codeCategory = this.category.codeCategory;
-      search.nameProduct = this.nameProduct;
-      search.status = 0;
-      search.distance = this.distance;
-      this.searchService.runSearch(search).subscribe((res: WebResult<any>) => {
-        if (res.Status == true) {
-          this.presentToast();
-          this.searchService.getHistoryForUser().subscribe((res: WebResult<any>) => {
-            this.searchService.searchesForHistory = res.Value;
-          })
-
-        }
-        else
-          alert(res.Message);
-      })
     })
-
-
   }
-  async presentToast() {
+  async presentToast(message) {
     const toast = await this.toastController.create({
-      message: "החיפוש הופעל בהצלחה",
+      message: message,
       color: "danger",
       duration: 1500,
-      position: 'top'                                
+      position: 'top'
     });
     toast.present();
   }

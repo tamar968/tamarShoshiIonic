@@ -36,7 +36,6 @@ export class LocationsService {
         this.checkDistance(this.lng, this.lat).subscribe((res: WebResult<any>) => {
           //if res.value is not null, then we found a shop
           if (res.Value.length > 0) {
-            debugger
             console.log(res.Value);
             this.presentAlert(res.Value);
           }

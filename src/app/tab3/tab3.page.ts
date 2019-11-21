@@ -63,7 +63,6 @@ export class Tab3Page implements OnInit {
       }
     });
     this.searchService.getShopsForCategory(this.category.codeCategory).subscribe((res: WebResult<any>) => {
-      debugger 
       if (res.Value == null) {
         this.shopsForCategory = res.Value;
         this.presentToast();
