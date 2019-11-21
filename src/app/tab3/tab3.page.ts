@@ -54,6 +54,7 @@ export class Tab3Page implements OnInit {
     })
   }
   categorySelected(item) {
+    
     this.category = new Category;
     this.category.nameCategory = this.nameCategory.substr(0, this.nameCategory.length - 1);
     this.Categories.forEach((cat) => {
@@ -62,7 +63,9 @@ export class Tab3Page implements OnInit {
       }
     });
     this.searchService.getShopsForCategory(this.category.codeCategory).subscribe((res: WebResult<any>) => {
+      debugger 
       if (res.Value == null) {
+        this.shopsForCategory = res.Value;
         this.presentToast();
       }
       else

@@ -27,7 +27,7 @@
       <agm-info-window>אתה נמצא כאן</agm-info-window>
     </agm-marker>
 
-    <agm-marker [agmFitBounds]="true" *ngFor="let locationItem of this.shopsForCategory"
+    <agm-marker style="margin:7px" [agmFitBounds]="true" *ngFor="let locationItem of this.shopsForCategory"
       [latitude]="locationItem.Latitude" [longitude]="locationItem.Longitude"
       (markerClick)="clickedMarker(locationItem,infowindow)" [iconUrl]="
     {

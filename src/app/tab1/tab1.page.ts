@@ -7,7 +7,7 @@ import { SearchService } from '../services/search.service';
 import { ShopDetailsForUsers } from '../models/ShopDetailsForUsers';
 import { LocationsService } from '../services/locations.service';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 import { AlertOptions } from '@ionic/core';
 import { User } from '../models/user';
 
@@ -25,7 +25,7 @@ export class Tab1Page implements OnInit {
   nameCategory: string;
   category: Category;
   constructor(private shopService: ShopService, private searchService: SearchService,
-    private locationsService: LocationsService, private alertCtrl: AlertController) {
+    private locationsService: LocationsService, private alertCtrl: AlertController, public toastController: ToastController) {
     this.initializeCategories();
     console.log(this.distance);
     //this.locationsService.distance();
@@ -78,9 +78,11 @@ export class Tab1Page implements OnInit {
       search.codeCategory = this.category.codeCategory;
       search.nameProduct = this.nameProduct;
       search.status = 0;
+      search.distance = this.distance;
+      debugger
       this.searchService.runSearch(search).subscribe((res: WebResult<any>) => {
         if (res.Status == true) {
-          alert("Succeed");
+          this.presentToast();
           this.searchService.getHistoryForUser().subscribe((res: WebResult<any>) => {
             this.searchService.searchesForHistory = res.Value;
             this.locationsService.distance();
@@ -94,5 +96,13 @@ export class Tab1Page implements OnInit {
 
 
   }
-
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: "החיפוש הופעל בהצלחה",
+      color: "danger",
+      duration: 1500,
+      position: 'top'                                
+    });
+    toast.present();
+  }
 }
