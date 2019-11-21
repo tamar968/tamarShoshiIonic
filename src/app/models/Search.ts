@@ -5,4 +5,5 @@ export class Search {
         status: number;
         codeShop?: number;
         codeCategory: number;
+        distance?: number;
 }

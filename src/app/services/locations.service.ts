@@ -6,6 +6,8 @@ import { AlertController } from '@ionic/angular';
 import { AlertOptions } from '@ionic/core';
 import { ShopDetailsForUsers } from '../models/ShopDetailsForUsers';
 import { SearchInShop } from '../models/search-in-shop';
+import { SearchDetailsForUser } from '../models/search-details-for-user';
+import { SearchService } from './search.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +17,7 @@ export class LocationsService {
   lng: any;
   lat: any;
   
-  constructor(private myHttp: HttpClient, private alertCtrl: AlertController, ) { }
+  constructor(private myHttp: HttpClient, private alertCtrl: AlertController, private searchService: SearchService ) { }
   
   checkDistance(lng, lat) {
     var locationAndUser: UserAndLocation = new UserAndLocation();
@@ -31,12 +33,15 @@ export class LocationsService {
         this.lat = +pos.coords.latitude;
        
           console.log(this.lat + " " + this.lng);
-          this.checkDistance(this.lng, this.lat).subscribe((res: WebResult<any>) => {
+          this.checkDistance(this.lng, this.lat).subscribe((res: WebResult<SearchInShop[]>) => {
             //if res.value is not null, then we found a shop
 
-            if (res.Value) {
+            if (res.Value.length > 0) {
               console.log(res.Value);
-              this.presentAlert(res.Value);
+              res.Value.forEach(searchFound => {
+                this.presentAlert(searchFound);
+              });
+              
             }
           })
       });

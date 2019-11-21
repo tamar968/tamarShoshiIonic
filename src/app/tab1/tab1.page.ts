@@ -78,6 +78,7 @@ export class Tab1Page implements OnInit {
       search.codeCategory = this.category.codeCategory;
       search.nameProduct = this.nameProduct;
       search.status = 0;
+      search.distance = this.distance;
       this.searchService.runSearch(search).subscribe((res: WebResult<any>) => {
         if (res.Status == true) {
           alert("Succeed");
