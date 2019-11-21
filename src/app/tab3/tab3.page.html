@@ -8,7 +8,7 @@
 </ion-header>
 <ion-content>
   <ion-item>
-    <ion-label>בחר קטגוריה</ion-label>
+    <ion-label style="text-align: center; color: red; font-weight: bold;">חפש חנויות לפי קטגוריה</ion-label>
     <ion-select required okText="בחר" cancelText="בטל" (ionChange)="categorySelected(item)" [(ngModel)]="nameCategory">
       <ion-select-option *ngFor="let item of Categories">{{item.nameCategory}}
       </ion-select-option>
@@ -27,7 +27,7 @@
       <agm-info-window>אתה נמצא כאן</agm-info-window>
     </agm-marker>
 
-    <agm-marker [agmFitBounds]="true" *ngFor="let locationItem of this.shopsForCategory"
+    <agm-marker style="margin:7px" [agmFitBounds]="true" *ngFor="let locationItem of this.shopsForCategory"
       [latitude]="locationItem.Latitude" [longitude]="locationItem.Longitude"
       (markerClick)="clickedMarker(locationItem,infowindow)" [iconUrl]="
     {

@@ -25,8 +25,8 @@ export class Tab1Page implements OnInit {
   nameCategory: string;
   category: Category;
   constructor(private shopService: ShopService, private searchService: SearchService,
-    private locationsService: LocationsService, private alertCtrl: AlertController, private toastCtrl : ToastController) {
-      
+    private locationsService: LocationsService, private alertCtrl: AlertController, private toastCtrl: ToastController) {
+
     console.log(this.distance);
     //this.locationsService.distance();
     //     this.uniqueDeviceID.get()
@@ -53,52 +53,43 @@ export class Tab1Page implements OnInit {
     });
   }
   searchItem() {
-    if(this.nameProduct == "" || this.category == null){
-      this.presentToastDanger();
+    if (this.nameProduct == "" || this.category == null) {
+      this.presentToastDanger("לא הוזנו נתונים מספיקים");
       return;
     }
 
     this.searchService.getShopsForCategory(this.category.codeCategory).subscribe((res: WebResult<any>) => {
       if (res.Value != null) {
         this.shopService.shopDetailForUsers = res.Value;
-        debugger;
         this.shopsFromSearch = res.Value;
-        this.shopsFromSearch.forEach(element => {
-          console.log("\n" + element.NameShop + " PhoneShop " + element.PhoneShop);
-          console.log("\n" + element.NameShop + " Longitude " + element.Longitude);
-          console.log("\n" + element.NameShop + " Latitude " + element.Latitude);
-          console.log("\n" + element.NameShop + " FromHour " + element.FromHour);
-          console.log("\n" + element.NameShop + " ToHour " + element.ToHour);
-          console.log("\n" + element.NameShop + " AddressString " + element.AddressString);
-        });
+
+        var search = new Search();
+        search.codeCategory = this.category.codeCategory;
+        search.nameProduct = this.nameProduct;
+        search.status = 0;
+        search.distance = this.distance;
+        this.searchService.runSearch(search).subscribe((res: WebResult<any>) => {
+          if (res.Status == true) {
+            this.presentToastSuccess();
+            this.searchService.getHistoryForUser().subscribe((res: WebResult<any>) => {
+              this.searchService.searchesForHistory = res.Value;
+            })
+            //reset the form
+            this.category = null;
+            this.distance = 50;
+            this.nameCategory = "";
+            this.nameProduct = "";
+
+          }
+          else
+            this.presentToastDanger(res.Message);
+        })
       }
       else {
-        alert(res.Message);
+        this.presentToastDanger(res.Message);
       }
-      var search = new Search();
-      search.codeCategory = this.category.codeCategory;
-      search.nameProduct = this.nameProduct;
-      search.status = 0;
-      search.distance = this.distance;
-      this.searchService.runSearch(search).subscribe((res: WebResult<any>) => {
-        if (res.Status == true) {
-          this.presentToastSuccess();
-          this.searchService.getHistoryForUser().subscribe((res: WebResult<any>) => {
-            this.searchService.searchesForHistory = res.Value;
-          })
-          //reset the form
-          this.category = null;
-          this.distance = 50;
-          this.nameCategory ="";
-          this.nameProduct = "";
 
-        }
-        else
-          console.log(res.Message);
-      })
     })
-
-
   }
   async presentToastSuccess() {
     const toast = await this.toastCtrl.create({
@@ -109,9 +100,9 @@ export class Tab1Page implements OnInit {
     });
     toast.present();
   }
-  async presentToastDanger() {
+  async presentToastDanger(message) {
     const toast = await this.toastCtrl.create({
-      message: 'לא הוזנו נתונים מספיקים',
+      message: message,
       color: "danger",
       duration: 2000,
       position: 'top',

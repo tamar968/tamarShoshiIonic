@@ -25,6 +25,7 @@ export class LocationsService {
   lng = this.Locations[0].lng;
   lat = this.Locations[0].lat;
   locationChange: Subject<{lat,lng}> = new Subject<{lat,lng}>();
+  strings: string;
   
   constructor(private myHttp: HttpClient, private alertCtrl: AlertController, private searchService: SearchService ) { }
   
@@ -33,6 +34,7 @@ export class LocationsService {
     locationAndUser.uuid = localStorage.getItem('user');
     locationAndUser.lng = lng;
     locationAndUser.lat = lat;
+
     return this.myHttp.post(`${this.baseUrl}WebService/Searches/CheckDistance`, locationAndUser);
   }
   distance() {
@@ -61,11 +63,8 @@ export class LocationsService {
       this.lng = this.Locations[rand].lng;
       this.lat = this.Locations[rand].lat;
       this.checkDistance(this.lng,this.lat).subscribe((res:WebResult<SearchInShop[]>)=>{
-        if(res.Value.length>0){
-          res.Value.forEach(searchInShop=>{
-            this.presentAlert(searchInShop);
-            
-          })
+        if(res.Value.length>0){         
+          this.presentAlert(res.Value);           
         }
         this.locationChange.next({lng:this.lng,lat:this.lat});
       })
@@ -73,10 +72,15 @@ export class LocationsService {
   }
 
   //popup for finding shop
-  async presentAlert(searchInShop: SearchInShop) {
+  async presentAlert(searchInShop: SearchInShop[]) {
+    this.strings = "";
+    searchInShop.forEach(element => {
+      this.strings += element.NameProduct;
+      this.strings += " ";
+    });
     const alert = await this.alertCtrl.create(<AlertOptions>{
-      header: ' קנה כאן!' + searchInShop.NameProduct,
-      message: searchInShop.NameShop,
+      header: ' קנה כאן!' + searchInShop[0].NameShop,
+      message: this.strings,
       buttons: [
         {
           text: 'לא עכשיו',
@@ -88,10 +92,13 @@ export class LocationsService {
         {
           text: 'קניתי',
           handler: () => {
-            console.log('Buy clicked' + searchInShop.MailShop);
-            this.foundSearch(searchInShop.CodeSearch, searchInShop.MailShop).subscribe(res => {
-              console.log("Bought");
+            console.log('Buy clicked');
+            searchInShop.forEach(element => {
+              this.foundSearch(element.CodeSearch, element.MailShop).subscribe((res: WebResult<any>) => {
+                console.log("Bought" + res.Value);
+              });
             });
+
           }
         }
       ]

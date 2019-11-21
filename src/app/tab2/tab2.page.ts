@@ -16,15 +16,15 @@ import { AlertOptions } from '@ionic/core';
 })
 export class Tab2Page {
   currentImage: any;
-  
+
   arrayStatus: string[] = [];;
-  constructor(public photoService: PhotoService, private searchService: SearchService, private alertCtrl: AlertController) { 
-    this.getAll();
+  constructor(public photoService: PhotoService, private searchService: SearchService, private alertCtrl: AlertController) {
+
   }
 
   ngOnInit() {
     this.photoService.loadSaved();
-    
+    this.getAll();
   }
   getAll() {
     this.searchService.getHistoryForUser().subscribe((res: WebResult<SearchDetailsForUser[]>) => {
@@ -39,7 +39,7 @@ export class Tab2Page {
   getFound() {
     this.searchService.getFound().subscribe((res: WebResult<SearchDetailsForUser[]>) => {
       this.searchService.searchesForHistory = res.Value;
-      debugger
+      this.searchService.searchesForHistory.reverse();
       this.changeStatusToString();
 
     })
@@ -47,12 +47,13 @@ export class Tab2Page {
   getNotFound() {
     this.searchService.getNotFound().subscribe((res: WebResult<SearchDetailsForUser[]>) => {
       this.searchService.searchesForHistory = res.Value;
+      this.searchService.searchesForHistory.reverse();
       this.changeStatusToString();
-
     })
   }
+
   changeStatusToString() {
-    while ( this.arrayStatus.length) {
+    while (this.arrayStatus.length) {
       this.arrayStatus.pop();
     }
     this.searchService.searchesForHistory.forEach(element => {
@@ -89,6 +90,4 @@ export class Tab2Page {
     });
     await alert.present();
   }
-
-
 }
