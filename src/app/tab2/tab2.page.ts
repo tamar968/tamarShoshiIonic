@@ -17,7 +17,6 @@ import { AlertOptions } from '@ionic/core';
 export class Tab2Page {
   currentImage: any;
 
-  arrayStatus: string[] = [];;
   constructor(public photoService: PhotoService, private searchService: SearchService, private alertCtrl: AlertController) {
 
   }
@@ -28,43 +27,25 @@ export class Tab2Page {
   }
   getAll() {
     this.searchService.getHistoryForUser().subscribe((res: WebResult<SearchDetailsForUser[]>) => {
-      this.searchService.searchesForHistory = res.Value;
-      console.log("before reverse :");
-      console.log(this.searchService.searchesForHistory);
-      this.searchService.searchesForHistory.reverse();
-      console.log("after  reverse: ");
-      this.changeStatusToString();
+      this.searchService.searchesForHistory = res.Value;     
+      this.searchService.changeStatusToString();
+      
     })
   }
   getFound() {
     this.searchService.getFound().subscribe((res: WebResult<SearchDetailsForUser[]>) => {
       this.searchService.searchesForHistory = res.Value;
-      this.searchService.searchesForHistory.reverse();
-      this.changeStatusToString();
+      this.searchService.changeStatusToString();
 
     })
   }
   getNotFound() {
     this.searchService.getNotFound().subscribe((res: WebResult<SearchDetailsForUser[]>) => {
       this.searchService.searchesForHistory = res.Value;
-      this.searchService.searchesForHistory.reverse();
-      this.changeStatusToString();
+      this.searchService.changeStatusToString();
     })
   }
 
-  changeStatusToString() {
-    while (this.arrayStatus.length) {
-      this.arrayStatus.pop();
-    }
-    this.searchService.searchesForHistory.forEach(element => {
-      if (element.status == 1) {
-        this.arrayStatus.push("נמצא");
-      }
-      else {
-        this.arrayStatus.push("מחפש");
-      }
-    });
-  }
   async remove(item: Search) {
     const alert = await this.alertCtrl.create(<AlertOptions>{
       title: 'מחיקת חיפוש',

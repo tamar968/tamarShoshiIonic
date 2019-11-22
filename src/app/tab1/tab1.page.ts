@@ -73,6 +73,8 @@ export class Tab1Page implements OnInit {
             this.presentToastSuccess();
             this.searchService.getHistoryForUser().subscribe((res: WebResult<any>) => {
               this.searchService.searchesForHistory = res.Value;
+              this.searchService.changeStatusToString(); 
+              
             })
             //reset the form
             this.category = null;

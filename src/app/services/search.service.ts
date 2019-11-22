@@ -15,9 +15,10 @@ export class SearchService {
   }
   currentUserPassword()
   {
-return localStorage.getItem('user');
+    return localStorage.getItem('user');
   }
   searchesForHistory: SearchDetailsForUser[];
+  arrayStatus: string[] = [];
 
   GetCategories() {
     return this.myHttp.get(`${this.baseUrl}WebService/Searches/GetCategories`);
@@ -47,5 +48,16 @@ return localStorage.getItem('user');
   }
   register(user: User) {
     return this.myHttp.post(`${this.baseUrl}WebService/User/Register`, user);
+  }
+  changeStatusToString() {
+    this.arrayStatus = [];
+    this.searchesForHistory.forEach(element => {
+      if (element.status == 1) {
+        this.arrayStatus.push("נמצא");
+      }
+      else {
+        this.arrayStatus.push("מחפש");
+      }
+    });
   }
 }

@@ -9,6 +9,7 @@ import { SearchInShop } from '../models/search-in-shop';
 import { SearchDetailsForUser } from '../models/search-details-for-user';
 import { SearchService } from './search.service';
 import { Subject } from 'rxjs';
+import { DisplayFound } from '../models/display-found';
 
 @Injectable({
   providedIn: 'root'
@@ -17,15 +18,18 @@ export class LocationsService {
   private baseUrl = 'http://localhost:55505/';
   
   Locations  = [
-    {lat:32.0884274, lng:34.836800499999981},
-    {lat:32.0819798, lng:34.832418899999993},
-    {lat:32.086637, lng:34.829819999999927},
-    {lat:32.4718343, lng:34.995714700000008},
+    {lat:32.0884274, lng:34.836800499999981},//הושע 14
+    {lat:32.0819798, lng:34.832418899999993},//דסלר 10
+    {lat:32.086637, lng:34.829819999999927},//רבי עקיבא
+    {lat:32.4718343, lng:34.995714700000008},//רחוב ירושלים
+    {lat:32.091035, lng: 34.830035},//רמבם זבוטינסקי
+    {lat: 32.078206, lng: 34.832622},//הסמינר
+    {lat: 32.081425, lng: 34.840911}//עזרא כהנמן
   ];
   lng = this.Locations[0].lng;
   lat = this.Locations[0].lat;
   locationChange: Subject<{lat,lng}> = new Subject<{lat,lng}>();
-  strings: string;
+  display: DisplayFound[];
   
   constructor(private myHttp: HttpClient, private alertCtrl: AlertController, private searchService: SearchService ) { }
   
@@ -59,7 +63,7 @@ export class LocationsService {
     // }
     
     setInterval(()=>{
-      var rand = Math.floor((Math.random() * 4));
+      var rand = Math.floor((Math.random() * 7));
       this.lng = this.Locations[rand].lng;
       this.lat = this.Locations[rand].lat;
       this.checkDistance(this.lng,this.lat).subscribe((res:WebResult<SearchInShop[]>)=>{
@@ -73,20 +77,37 @@ export class LocationsService {
 
   //popup for finding shop
   async presentAlert(searchInShop: SearchInShop[]) {
-    this.strings = "";
+    this.display = [];
     searchInShop.forEach(element => {
-      this.strings += element.NameProduct;
-      this.strings += " ";
+      var found = this.display.find(f => f.nameShop == element.NameShop);
+      if(found){
+        found.categoriesInShop.push(element.NameProduct);
+      }
+      else{
+        var newDisplay = new DisplayFound();
+        newDisplay.nameShop = element.NameShop;
+        newDisplay.categoriesInShop = [];
+        newDisplay.categoriesInShop.push(element.NameProduct);
+        this.display.push(newDisplay);
+      }
+    });
+    var longString = "";
+    this.display.forEach(disp => {
+      longString += disp.nameShop+" : ";
+      disp.categoriesInShop.forEach(cat => {
+        longString += cat+" ";
+      });
+      longString += '<br>';
     });
     const alert = await this.alertCtrl.create(<AlertOptions>{
-      header: ' קנה כאן!' + searchInShop[0].NameShop,
-      message: this.strings,
+      header: ' קנה כאן!',
+      message: longString,
       buttons: [
         {
           text: 'לא עכשיו',
           role: 'cancel',
           handler: () => {
-            console.log('Cancel clicked');
+            
           }
         },
         {
@@ -96,6 +117,12 @@ export class LocationsService {
             searchInShop.forEach(element => {
               this.foundSearch(element.CodeSearch, element.MailShop).subscribe((res: WebResult<any>) => {
                 console.log("Bought" + res.Value);
+                this.searchService.getHistoryForUser().subscribe((res:WebResult<any>) =>{
+                  if(res.Status == true){
+                    this.searchService.searchesForHistory = res.Value;
+                    this.searchService.changeStatusToString();
+                  }
+                })
               });
             });
 
