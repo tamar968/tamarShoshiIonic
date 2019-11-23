@@ -99,25 +99,7 @@ export class LocationsService {
         this.display.push(newDisplay);
       }
     });
-    var longString = "<ion-list>";
-    this.display.forEach(disp => {
-      longString += "<ion-item>"
-      longString += "<ion-label>"
-      longString += disp.nameShop+" : ";
-      longString += disp.productsInShop;
-      longString += "</ion-label>";
-      longString += "<ion-checkbox color='danger' slot='start' [(ngModel)]='disp.isChecked'></ion-checkbox>";  
-      longString += "</ion-item>";
-    });
-    longString += "</ion-list>"
-
-    var tryLongString =
-     "<ion-list>"+
-      "<ion-item *ngFor='let option of display'>"+
-      "<ion-label>{{option.productsInShop}}</ion-label>"+
-      "<ion-checkbox slot='start' [(ngModel)]='option.isChecked'></ion-checkbox>"+
-      "</ion-item>"+
-    "</ion-list>";
+    
 
     const theNewInputs = [];
     for (let i = 0; i < this.display.length; i++) {

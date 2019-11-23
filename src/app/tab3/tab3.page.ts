@@ -18,7 +18,7 @@ export class Tab3Page implements OnInit {
 
   latitude: number = this.locationsService.lat;
   longitude: number = this.locationsService.lng;
-  zoom: number = 50;
+  zoom: number = 15;
   shopsForCategory: ShopDetailsForUsers[];
   Categories: Category[];
   nameProduct: string;
@@ -47,14 +47,14 @@ export class Tab3Page implements OnInit {
     //   navigator.geolocation.watchPosition((position) => {
     //     this.latitude = position.coords.latitude;
     //     this.longitude = position.coords.longitude;
-    //     this.zoom = 50;
+    //     this.zoom = 15;
 
 
     //   });
     // }
     this.latitude = this.locationsService.lat;
     this.longitude = this.locationsService.lng;
-    this.zoom = 50;
+    this.zoom = 15;
   }
   initializeCategories() {
     this.searchService.GetCategories().subscribe((res: WebResult<Category[]>) => {

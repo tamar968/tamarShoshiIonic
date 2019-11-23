@@ -53,6 +53,7 @@ export class Tab1Page implements OnInit {
   }
   searchItem() {
     if (this.nameProduct == "" || this.category == null) {
+      debugger;
       this.presentToastDanger("לא הוזנו נתונים מספיקים");
       return;
     }
@@ -88,6 +89,11 @@ export class Tab1Page implements OnInit {
       }
       else {
         this.presentToastDanger(res.Message);
+        //reset the form
+        this.category = null;
+        this.distance = 50;
+        this.nameCategory = "";
+        this.nameProduct = "";
       }
 
     })

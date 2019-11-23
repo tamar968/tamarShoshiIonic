@@ -14,7 +14,7 @@
       </ion-select-option>
     </ion-select>
   </ion-item>
-  <agm-map [fitBounds]="true" [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+  <agm-map [fitBounds]="this.shopsForCategory&&this.shopsForCategory.length>1" [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
     <agm-marker class="img" [agmFitBounds]="true" [latitude]="latitude" [longitude]="longitude" [iconUrl]="
     {
       url: '../assets/icon/location.png',
