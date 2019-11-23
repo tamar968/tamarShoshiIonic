@@ -10,6 +10,7 @@ import { SearchDetailsForUser } from '../models/search-details-for-user';
 import { SearchService } from './search.service';
 import { Subject } from 'rxjs';
 import { DisplayFound } from '../models/display-found';
+import { red } from 'color-name';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +32,9 @@ export class LocationsService {
   locationChange: Subject<{lat,lng}> = new Subject<{lat,lng}>();
   display: DisplayFound[];
   
-  constructor(private myHttp: HttpClient, private alertCtrl: AlertController, private searchService: SearchService ) { }
+  constructor(private myHttp: HttpClient, private alertCtrl: AlertController, private searchService: SearchService ) {
+    
+   }
   
   checkDistance(lng, lat) {
     var locationAndUser: UserAndLocation = new UserAndLocation();
@@ -81,27 +84,62 @@ export class LocationsService {
     searchInShop.forEach(element => {
       var found = this.display.find(f => f.nameShop == element.NameShop);
       if(found){
-        found.categoriesInShop.push(element.NameProduct);
+        found.productsInShop += element.NameProduct + " ";      
+        found.codeSearchesInShop.push(element.CodeSearch);
       }
       else{
         var newDisplay = new DisplayFound();
         newDisplay.nameShop = element.NameShop;
-        newDisplay.categoriesInShop = [];
-        newDisplay.categoriesInShop.push(element.NameProduct);
+        newDisplay.productsInShop = "";
+        newDisplay.productsInShop += element.NameProduct + " ";
+        newDisplay.mailShop = element.MailShop;
+        newDisplay.codeSearchesInShop = [];
+        newDisplay.codeSearchesInShop.push(element.CodeSearch);
+        newDisplay.isChecked = false;
         this.display.push(newDisplay);
       }
     });
-    var longString = "";
+    var longString = "<ion-list>";
     this.display.forEach(disp => {
+      longString += "<ion-item>"
+      longString += "<ion-label>"
       longString += disp.nameShop+" : ";
-      disp.categoriesInShop.forEach(cat => {
-        longString += cat+" ";
-      });
-      longString += '<br>';
+      longString += disp.productsInShop;
+      longString += "</ion-label>";
+      longString += "<ion-checkbox color='danger' slot='start' [(ngModel)]='disp.isChecked'></ion-checkbox>";  
+      longString += "</ion-item>";
     });
+    longString += "</ion-list>"
+
+    var tryLongString =
+     "<ion-list>"+
+      "<ion-item *ngFor='let option of display'>"+
+      "<ion-label>{{option.productsInShop}}</ion-label>"+
+      "<ion-checkbox slot='start' [(ngModel)]='option.isChecked'></ion-checkbox>"+
+      "</ion-item>"+
+    "</ion-list>";
+
+    const theNewInputs = [];
+    for (let i = 0; i < this.display.length; i++) {
+      theNewInputs.push(
+        {
+          label: this.display[i].nameShop + " : " +this.display[i].productsInShop,
+          type: 'checkbox',
+          color: red,
+          checked: false,
+          handler:(e)=>{
+            this.display[i].isChecked = e.checked;
+             console.info('value: ',e.checked)
+          }
+        }
+      );
+    }
+    
+
     const alert = await this.alertCtrl.create(<AlertOptions>{
       header: ' קנה כאן!',
-      message: longString,
+      //message: longString,
+      inputs: theNewInputs,
       buttons: [
         {
           text: 'לא עכשיו',
@@ -114,17 +152,23 @@ export class LocationsService {
           text: 'קניתי',
           handler: () => {
             console.log('Buy clicked');
-            searchInShop.forEach(element => {
-              this.foundSearch(element.CodeSearch, element.MailShop).subscribe((res: WebResult<any>) => {
-                console.log("Bought" + res.Value);
-                this.searchService.getHistoryForUser().subscribe((res:WebResult<any>) =>{
-                  if(res.Status == true){
-                    this.searchService.searchesForHistory = res.Value;
-                    this.searchService.changeStatusToString();
-                  }
-                })
-              });
+            this.display.forEach(shopBought => {
+              if(shopBought.isChecked == true){
+                shopBought.codeSearchesInShop.forEach(code =>{
+                  this.foundSearch(code, shopBought.mailShop).subscribe((res: WebResult<any>) => {
+                    console.log("Bought" + res.Value);    
+                    this.searchService.getHistoryForUser().subscribe((res:WebResult<any>) =>{
+                      if(res.Status == true){
+                        this.searchService.searchesForHistory = res.Value;
+                        this.searchService.changeStatusToString();
+                      }
+                    })               
+                  });
+                })              
+              }
+              
             });
+            
 
           }
         }
@@ -135,7 +179,9 @@ export class LocationsService {
       alert.dismiss();
     }, 10000);
     
+    
   }
+  
   foundSearch(codeSearch, mailShop) {
     return this.myHttp.post(`${this.baseUrl}WebService/Searches/Found`, { codeSearch: codeSearch, mailShop: mailShop });
   }

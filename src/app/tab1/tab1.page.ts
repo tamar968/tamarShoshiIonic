@@ -27,7 +27,6 @@ export class Tab1Page implements OnInit {
   constructor(private shopService: ShopService, private searchService: SearchService,
     private locationsService: LocationsService, private alertCtrl: AlertController, private toastCtrl: ToastController) {
 
-    console.log(this.distance);
     //this.locationsService.distance();
     //     this.uniqueDeviceID.get()
     //   .then((uuid: any) => this.uuid=uuid)
