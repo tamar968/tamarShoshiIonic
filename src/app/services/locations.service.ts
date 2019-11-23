@@ -61,17 +61,17 @@ export class LocationsService {
     //       })
     //   });
     // }
-    
-    setInterval(()=>{
-      var rand = Math.floor((Math.random() * 7));
-      this.lng = this.Locations[rand].lng;
-      this.lat = this.Locations[rand].lat;
-      this.checkDistance(this.lng,this.lat).subscribe((res:WebResult<SearchInShop[]>)=>{
-        if(res.Value.length>0){         
-          this.presentAlert(res.Value);           
-        }
-        this.locationChange.next({lng:this.lng,lat:this.lat});
-      })
+    var rand = Math.floor((Math.random() * this.Locations.length));
+    this.lng = this.Locations[rand].lng;
+    this.lat = this.Locations[rand].lat;
+    this.checkDistance(this.lng,this.lat).subscribe((res:WebResult<SearchInShop[]>)=>{
+      if(res.Value.length>0){         
+        this.presentAlert(res.Value);           
+      }
+      this.locationChange.next({lng:this.lng,lat:this.lat});
+    })
+    setTimeout(()=>{
+     this.distance();
     },10000);
   }
 
@@ -131,6 +131,9 @@ export class LocationsService {
       ]
     });
     await alert.present();
+    setTimeout(()=>{
+      alert.dismiss();
+    }, 10000);
     
   }
   foundSearch(codeSearch, mailShop) {
