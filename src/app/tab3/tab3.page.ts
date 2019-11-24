@@ -95,5 +95,6 @@ export class Tab3Page implements OnInit {
       position: 'middle'
     });
     toast.present();
+    this.nameCategory="";
   }
 }
