@@ -53,7 +53,6 @@ export class Tab1Page implements OnInit {
   }
   searchItem() {
     if (this.nameProduct == "" || this.category == null) {
-      debugger;
       this.presentToastDanger("לא הוזנו נתונים מספיקים");
       return;
     }
