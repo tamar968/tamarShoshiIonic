@@ -11,7 +11,6 @@ import { AlertController, ToastController } from '@ionic/angular';
 import { AlertOptions } from '@ionic/core';
 import { User } from '../models/user';
 
-
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
@@ -33,6 +32,7 @@ export class Tab1Page implements OnInit {
     //  ;
 
   }
+
   initializeCategories() {
     this.searchService.GetCategories().subscribe((res: WebResult<Category[]>) => {
       this.Categories = res.Value;
@@ -73,8 +73,8 @@ export class Tab1Page implements OnInit {
             this.presentToastSuccess();
             this.searchService.getHistoryForUser().subscribe((res: WebResult<any>) => {
               this.searchService.searchesForHistory = res.Value;
-              this.searchService.changeStatusToString(); 
-              
+              this.searchService.changeStatusToString();
+
             })
             //reset the form
             this.category = null;

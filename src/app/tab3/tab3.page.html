@@ -8,19 +8,21 @@
 </ion-header>
 <ion-content>
   <ion-item>
-    <ion-label style="text-align: center; color: red; font-weight: bold;">חפש חנויות לפי קטגוריה</ion-label>
+    <ion-label style=" text-align: center;  color:#ee1925; font-weight: bold;">חפש חנויות לפי קטגוריה
+    </ion-label>
     <ion-select required okText="בחר" cancelText="בטל" (ionChange)="categorySelected(item)" [(ngModel)]="nameCategory">
       <ion-select-option *ngFor="let item of Categories">{{item.nameCategory}}
       </ion-select-option>
     </ion-select>
   </ion-item>
-  <agm-map [fitBounds]="this.shopsForCategory&&this.shopsForCategory.length>1" [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+  <agm-map [fitBounds]="this.shopsForCategory&&this.shopsForCategory.length>1" [latitude]="latitude"
+    [longitude]="longitude" [zoom]="zoom">
     <agm-marker class="img" [agmFitBounds]="true" [latitude]="latitude" [longitude]="longitude" [iconUrl]="
     {
       url: '../assets/icon/location.png',
       scaledSize: {
-          width: 40,
-          height: 40
+          width: 70,
+          height: 70
       }
   }">
 
@@ -33,7 +35,7 @@
     {
       url: '../assets/icon/shop.png',
       scaledSize: {
-          width: 50,
+          width: 45,
           height: 50
       }
   }">
