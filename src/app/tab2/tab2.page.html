@@ -8,26 +8,68 @@
 </ion-header>
 
 <ion-content>
-  <ion-fab vertical="top" horizontal="end">
-    <ion-fab-button color="dark" fill="outline" title="סנן">
-      <ion-icon name="add"></ion-icon>
+  <!-- <ion-card>
+    
+    <ion-card-content>
+      <ion-item>
+        <ion-label>מה אני רוצה להספיק?</ion-label>
+        <ion-input type="text" [(ngModel)]="nameProduct"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>מתאריך</ion-label>
+        <ion-datetime></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label>עד תאריך</ion-label>
+        <ion-datetime [(ngModel)] ="dateStart"></ion-datetime>
+
+      </ion-item>
+      <ion-item>
+        <ion-label>נמצא בקטגוריה</ion-label>
+        <ion-select required okText="בחר" cancelText="בטל" (ionChange)="categorySelected(item)"
+          [(ngModel)]="nameCategory">
+          <ion-select-option *ngFor="let item of Categories">{{item.nameCategory}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+
+      <ion-item>
+
+
+
+        <ion-label>בחר מרחק לחיפוש</ion-label>
+      </ion-item>
+      <ion-item style="direction: ltr;">
+        <ion-label>0</ion-label>
+        <ion-range [ngModelOptions]="{standalone: true}" [(ngModel)]="distance" min="0" max="3000" color="primary"
+          pin="true"></ion-range>
+        <ion-label>3000</ion-label>
+      </ion-item>
+      <ion-button id="h" color="primary" name="search" fill="outline" expand="block" (click)="searchItem()">הפעל חיפוש
+      </ion-button>
+
+    </ion-card-content>
+  </ion-card> -->
+
+  <ion-fab>
+    <ion-fab-button  fill="outline" title="סנן">
+      <!-- <ion-icon name="add"></ion-icon> -->
     </ion-fab-button>
+
     <ion-fab-list side="start">
-      <ion-button color="dark" fill="outline" (click)="getFound()">נמצאו</ion-button>
-      <ion-button color="dark" fill="outline" (click)="getNotFound()">לא נמצאו</ion-button>
-      <ion-button color="dark" fill="outline" (click)="getAll()">הכל</ion-button>
+      <ion-button color="primary" fill="outline" (click)="getFound()">נמצאו</ion-button>
+      <ion-button color="priary" fill="outline" (click)="getNotFound()">לא נמצאו</ion-button>
+      <ion-button color="primary" fill="outline" (click)="getAll()">הכל</ion-button>
     </ion-fab-list>
   </ion-fab>
-  <br>
-  <br>
-  <br>
-  <br>
+
   <ion-list>
-    <ion-label class="l"> מוצר</ion-label>
-    <ion-label class="l">קטגוריה</ion-label>
-    <ion-label class="l">חנות</ion-label>
-    <ion-label class="l">מצב </ion-label>
-    <ion-label class="l">מחק </ion-label>
+    <ion-label color="primary" class="l"> מוצר</ion-label>
+    <ion-label color="primary" class="l">קטגוריה</ion-label>
+    <ion-label color="primary" class="l">חנות</ion-label>
+    <ion-label color="primary" class="l">מצב </ion-label>
+    <ion-label color="primary" class="l">מחק </ion-label>
     <ion-item *ngFor="let item of this.searchService.searchesForHistory ;let i=index">
       <ion-label>
         <p title="{{item.nameProduct}}">{{item.nameProduct}}</p>

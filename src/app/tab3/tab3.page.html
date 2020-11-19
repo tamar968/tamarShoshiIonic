@@ -8,7 +8,7 @@
 </ion-header>
 <ion-content>
   <ion-item>
-    <ion-label style=" text-align: center;  color:#ee1925; font-weight: bold;">חפש חנויות לפי קטגוריה
+    <ion-label style=" text-align: center;   font-weight: bold;">חפש חנויות לפי קטגוריה
     </ion-label>
     <ion-select required okText="בחר" cancelText="בטל" (ionChange)="categorySelected(item)" [(ngModel)]="nameCategory">
       <ion-select-option *ngFor="let item of Categories">{{item.nameCategory}}

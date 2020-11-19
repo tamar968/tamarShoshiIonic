@@ -105,7 +105,7 @@ export class AppComponent implements OnInit{
   async presentToast() {
     const toast = await this.toastController.create({
       message: 'מלא את השדות',
-      color: "danger",
+      color: "primary",
       duration: 2000
     });
     toast.present();

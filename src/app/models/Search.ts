@@ -6,4 +6,6 @@ export class Search {
         codeShop?: number;
         codeCategory: number;
         distance?: number;
+        dateStart:Date;
+        dateEnd:Date;
 }

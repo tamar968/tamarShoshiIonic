@@ -159,7 +159,7 @@ export class LocationsService {
     await alert.present();
     setTimeout(()=>{
       alert.dismiss();
-    }, 10000);
+    }, 3000);
     
     
   }

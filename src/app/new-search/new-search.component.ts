@@ -1,27 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import { PhotoService } from '../services/photo.service';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ShopService } from '../services/shop.service';
-import { Search } from '../models/Search';
-import { WebResult } from '../models/WebResult';
-import { SearchService } from '../services/search.service';
-import { SearchDetailsForUser } from '../models/search-details-for-user';
-import { AlertController, ToastController } from '@ionic/angular';
-import { AlertOptions } from '@ionic/core';
 import { Category } from '../models/Category';
+import { WebResult } from '../models/WebResult';
+import { Search } from '../models/Search';
+import { SearchService } from '../services/search.service';
 import { ShopDetailsForUsers } from '../models/ShopDetailsForUsers';
 import { LocationsService } from '../services/locations.service';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
+import { AlertController, ToastController } from '@ionic/angular';
+import { AlertOptions } from '@ionic/core';
 import { User } from '../models/user';
-import { ModalController } from '@ionic/angular';
-// import { NewSearchComponent } from '../new-search/new-search.component';
+import { CommonModule } from '@angular/common';
+import { SearchModalService } from '../services/search-modal.service';
 
 @Component({
-  selector: 'app-tab2',
-  templateUrl: 'tab2.page.html',
-  styleUrls: ['tab2.page.scss']
+  selector: 'app-new-search',
+  templateUrl: './new-search.component.html',
+  styleUrls: ['./new-search.component.scss']
 })
-export class Tab2Page implements OnInit {
-  currentImage: any;
+export class NewSearchComponent implements OnInit {
+
+  @Input() fromCalendar = false;
+  // @Input() dateStart:Date;
+  // @Input() dateEnd:Date;
+  
   shopsFromSearch: ShopDetailsForUsers[];
   Categories: Category[];
   distance: number = 50;
@@ -31,16 +34,15 @@ export class Tab2Page implements OnInit {
   dateStart: Date;
   dateEnd: Date;
 
-
-
   customYearValues = [2020, 2016, 2008, 2004, 2000, 1996];
   customDayShortNames = ['s\u00f8n', 'man', 'tir', 'ons', 'tor', 'fre', 'l\u00f8r'];
   customPickerOptions: any;
-  uniqueDeviceID = new UniqueDeviceID();
-  uuid: any;
 
-  constructor(private shopService: ShopService,private photoService:PhotoService ,private modalCtrl:ModalController, public searchService: SearchService,
+
+
+  constructor(private shopService: ShopService, private searchService: SearchService,private searchModalService: SearchModalService,
     private locationsService: LocationsService, private alertCtrl: AlertController, private toastCtrl: ToastController) {
+
     this.customPickerOptions = {
       buttons: [{
         text: 'Save',
@@ -52,69 +54,16 @@ export class Tab2Page implements OnInit {
           return false;
         }
       }]
-    };
-    this.locationsService.distance();
-    this.uniqueDeviceID.get()
-      .then((uuid: any) => this.uuid = uuid);
-  }
-
-  
+    }
 
 
 
-  ngOnInit() {
-    this.initializeCategories();
-    this.photoService.loadSaved();
-    this.getAll();
+    //this.locationsService.distance();
+    //     this.uniqueDeviceID.get()
+    //   .then((uuid: any) => this.uuid=uuid)
+    //  ;
 
   }
-  getAll() {
-    this.searchService.getHistoryForUser().subscribe((res: WebResult<SearchDetailsForUser[]>) => {
-      this.searchService.searchesForHistory = res.Value;
-      this.searchService.changeStatusToString();
-
-    })
-  }
-  getFound() {
-    this.searchService.getFound().subscribe((res: WebResult<SearchDetailsForUser[]>) => {
-      this.searchService.searchesForHistory = res.Value;
-      this.searchService.changeStatusToString();
-
-    })
-  }
-  getNotFound() {
-    this.searchService.getNotFound().subscribe((res: WebResult<SearchDetailsForUser[]>) => {
-      this.searchService.searchesForHistory = res.Value;
-      this.searchService.changeStatusToString();
-    })
-  }
-
-  async remove(item: Search) {
-    const alert = await this.alertCtrl.create(<AlertOptions>{
-      title: 'מחיקת חיפוש',
-      message: `<h3> האם אתה בטוח במחיקת חיפוש ה${item.nameProduct}?</h3>`,
-      buttons: [
-        {
-          text: 'לא',
-          handler: () => {
-            console.log('מתחרט');
-          }
-        },
-        {
-          text: 'כן',
-          handler: () => {
-            this.searchService.Delete(item.codeSearch).subscribe((res: WebResult<any>) => {
-              console.log("after delete" + res.Message);
-              this.getAll();
-            });
-
-          }
-        }
-      ]
-    });
-    await alert.present();
-  }
-
 
   initializeCategories() {
     this.searchService.GetCategories().subscribe((res: WebResult<Category[]>) => {
@@ -122,8 +71,10 @@ export class Tab2Page implements OnInit {
     })
   }
 
-
-  categorySelected(item) {
+  ngOnInit() {
+    this.initializeCategories();
+  }
+  categorySelected() {
     this.category = new Category;
     this.category.nameCategory = this.nameCategory.substr(0, this.nameCategory.length - 1);
     this.Categories.forEach((cat) => {
@@ -133,6 +84,7 @@ export class Tab2Page implements OnInit {
     });
   }
   searchItem() {
+   this.searchModalService.myModal.dismiss();
     if (this.nameProduct == "" || this.category == null) {
       this.presentToastDanger("לא הוזנו נתונים מספיקים");
       return;
@@ -148,8 +100,6 @@ export class Tab2Page implements OnInit {
         search.nameProduct = this.nameProduct;
         search.status = 0;
         search.distance = this.distance;
-        search.dateStart = this.dateStart;
-        search.dateEnd = this.dateEnd;
         this.searchService.runSearch(search).subscribe((res: WebResult<any>) => {
           if (res.Status == true) {
             this.presentToastSuccess();
@@ -192,10 +142,11 @@ export class Tab2Page implements OnInit {
   async presentToastDanger(message) {
     const toast = await this.toastCtrl.create({
       message: message,
-      color: "primary",
+      color: "danger",
       duration: 2000,
       position: 'top',
     });
     toast.present();
   }
+
 }

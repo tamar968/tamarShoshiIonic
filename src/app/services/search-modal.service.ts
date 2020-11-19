@@ -10,8 +10,12 @@ import { ModalController } from '@ionic/angular';
 @Injectable({
   providedIn: 'root'
 })
-
-export class SearchService {
+@NgModule(
+  {
+    // entryComponents:[NewSearchComponent]
+  }
+)
+export class SearchModalService {
   private baseUrl = 'http://localhost:55505/';
   myModal: HTMLIonModalElement;
   constructor(private myHttp: HttpClient, private modalCtrl:ModalController) {
@@ -53,22 +57,12 @@ export class SearchService {
   register(user: User) {
     return this.myHttp.post(`${this.baseUrl}WebService/User/Register`, user);
   }
-  changeStatusToString() {
-    this.arrayStatus = [];
-    this.searchesForHistory.forEach(element => {
-      if (element.status == 1) {
-        this.arrayStatus.push("נמצא");
-      }
-      else {
-        this.arrayStatus.push("מחפש");
-      }
-    });
-  }
+ 
   // async openNewSearchModal(dateStart: Date,dateEnd:Date) {
 
   //    this.myModal = await this.modalCtrl.create({
   //     component: NewSearchComponent
-  //     //, componentProps: { dateStart, dateEnd }
+  //     , componentProps: { dateStart, dateEnd }
   //   });
 
   //   this.myModal.present();
@@ -78,4 +72,11 @@ export class SearchService {
   //   const event: any = await this.myModal.onDidDismiss();
  
   // }
+  
+  async setModal(modal:HTMLIonModalElement) {
+
+    return this.myModal = modal ;
+  //  const event: any = await this.myModal.onDidDismiss();
+ }
+ 
 }
