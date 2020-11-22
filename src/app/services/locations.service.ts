@@ -24,7 +24,7 @@ export class LocationsService {
     {lat:32.086637, lng:34.829819999999927},//רבי עקיבא
     {lat:32.4718343, lng:34.995714700000008},//רחוב ירושלים
     {lat:32.091035, lng: 34.830035},//רמבם זבוטינסקי
-    {lat: 32.078206, lng: 34.832622},//הסמינר
+    {lat: 32.078206, lng: 34.832622},//סמינר וולף
     {lat: 32.081425, lng: 34.840911}//עזרא כהנמן
   ];
   lng = this.Locations[0].lng;
@@ -119,7 +119,7 @@ export class LocationsService {
     
 
     const alert = await this.alertCtrl.create(<AlertOptions>{
-      header: ' קנה כאן!',
+      header: 'בצע מטלתך כאן!',
       //message: longString,
       inputs: theNewInputs,
       buttons: [
@@ -131,7 +131,7 @@ export class LocationsService {
           }
         },
         {
-          text: 'קניתי',
+          text: 'ביצעתי',
           handler: () => {
             console.log('Buy clicked');
             this.display.forEach(shopBought => {
@@ -163,7 +163,9 @@ export class LocationsService {
     
     
   }
-  
+  UpdateSearchStatus(codeSearch,status, mailShop) {
+    return this.myHttp.post(`${this.baseUrl}WebService/Searches/Found`, { codeSearch: codeSearch,status:status, mailShop: mailShop });
+  }
   foundSearch(codeSearch, mailShop) {
     return this.myHttp.post(`${this.baseUrl}WebService/Searches/Found`, { codeSearch: codeSearch, mailShop: mailShop });
   }

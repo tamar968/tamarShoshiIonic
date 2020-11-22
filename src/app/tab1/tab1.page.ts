@@ -31,6 +31,7 @@ export class Tab1Page implements OnInit {
   optionsRange: CalendarComponentOptions = {
     pickMode: 'range',
   };
+  
   from: Date;
   to: Date;
 
@@ -108,7 +109,7 @@ export class Tab1Page implements OnInit {
   //   console.log(e);
   // }
   onChange(e) {
-    this.addEvent(e.from._d, e.to._d);
+    this.openModal(e.from._d, e.to._d);
   }
   // constructor(private shopService: ShopService, private searchService: SearchService,
   //   private locationsService: LocationsService, private alertCtrl: AlertController, private toastCtrl: ToastController) {
@@ -220,20 +221,20 @@ export class Tab1Page implements OnInit {
 
   
   async openModal(dateStart: Date,dateEnd:Date) {
-    // const options = {
-    //   title: 'BASIC'
-    // };
    
+this.dateRange.from=new Date();
+this.dateRange.to= new Date();
 
     const myModal = await this.modalCtrl.create({
       component: NewSearchComponent,
-      // componentProps: { options }
+      componentProps: { dateFrom:dateStart, dateTo:dateEnd }
     });
 
     myModal.present();
-    // setTimeout(function () {
-    //   myModal.dismiss();
-    // }, 5000)
+
+    setTimeout(function () {
+      myModal.dismiss();
+    }, 600000)
 
     this.searchModalService.setModal(myModal);
     const event: any = await myModal.onDidDismiss();

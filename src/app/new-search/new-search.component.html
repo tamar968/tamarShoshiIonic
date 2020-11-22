@@ -2,20 +2,28 @@
     
   <ion-card-content>
     <ion-item>
-      <ion-label>מה אני רוצה להספיק?</ion-label>
+      <ion-label>מטלה</ion-label>
       <ion-input type="text" [(ngModel)]="nameProduct"></ion-input>
     </ion-item>
+    <ng-container *ngIf="!fromCalendar">
     <ion-item>
       <ion-label>מתאריך</ion-label>
-      <ion-datetime [(ngModel)] ="dateStart"></ion-datetime>
+      <ion-datetime [(ngModel)] ="dateStart"
+      [dayNames]="dayNames"
+       [monthShortNames]="monthNames"
+       [doneText]="'שמירה'"
+        [cancelText]="'ביטול'"
+        [displayFormat]></ion-datetime>
     </ion-item>
     <ion-item>
+
       <ion-label>עד תאריך</ion-label>
       <ion-datetime [(ngModel)] ="dateEnd"></ion-datetime>
-
+<ion-datetime value="2019-10-01T15:43:40.394Z" display-timezone="utc"></ion-datetime>
     </ion-item>
+  </ng-container>
     <ion-item>
-      <ion-label>נמצא בקטגוריה</ion-label>
+      <ion-label>קטגוריה</ion-label>
       <ion-select required okText="בחר" cancelText="בטל" (ionChange)="categorySelected()"
         [(ngModel)]="nameCategory">
         <ion-select-option *ngFor="let item of Categories">{{item.nameCategory}}

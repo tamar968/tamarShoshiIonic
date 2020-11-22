@@ -1,8 +1,8 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      <img alt="logo" src="../../assets/icon/logo.png">
-      <ion-label class="aa">מפה</ion-label>
+      <img alt="logo" src="../../assets/icon/favicon.png">
+      <ion-label class="">מפה</ion-label>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -10,7 +10,7 @@
   <ion-item>
     <ion-label style=" text-align: center;   font-weight: bold;">חפש חנויות לפי קטגוריה
     </ion-label>
-    <ion-select required okText="בחר" cancelText="בטל" (ionChange)="categorySelected(item)" [(ngModel)]="nameCategory">
+    <ion-select required okText="בחר" cancelText="בטל" (ionChange)="categorySelected()" [(ngModel)]="nameCategory">
       <ion-select-option *ngFor="let item of Categories">{{item.nameCategory}}
       </ion-select-option>
     </ion-select>

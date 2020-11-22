@@ -6,19 +6,22 @@ import { User } from '../models/user';
 import { SearchDetailsForUser } from '../models/search-details-for-user';
 // import { NewSearchComponent } from '../new-search/new-search.component';
 import { ModalController } from '@ionic/angular';
+import { EStatus } from '../models/EStatus';
+
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class SearchService {
+
+
   private baseUrl = 'http://localhost:55505/';
   myModal: HTMLIonModalElement;
-  constructor(private myHttp: HttpClient, private modalCtrl:ModalController) {
+  constructor(private myHttp: HttpClient, private modalCtrl: ModalController) {
 
   }
-  currentUserPassword()
-  {
+  currentUserPassword() {
     return localStorage.getItem('user');
   }
   searchesForHistory: SearchDetailsForUser[];
@@ -33,7 +36,12 @@ export class SearchService {
   runSearch(search: Search) {
     return this.myHttp.post(`${this.baseUrl}WebService/Searches/RunSearch`, { search: search, passwordUser: this.currentUserPassword() });
   }
-
+  updateSearchStatus(codeSearch, status, mailShop) {
+    return this.myHttp.post(`${this.baseUrl}WebService/Searches/UpdateSearchStatus`, { codeSearch: codeSearch, status: status, mailShop: mailShop });
+  }
+  updateAllSearchStatus() {
+    return this.myHttp.get(`${this.baseUrl}WebService/Searches/UpdateAllSearchStatus`);
+  }
   getHistoryForUser() {
 
     return this.myHttp.post(`${this.baseUrl}WebService/Searches/GetHistory`, this.currentUserPassword());
@@ -46,9 +54,16 @@ export class SearchService {
   getNotFound() {
     return this.myHttp.post(`${this.baseUrl}WebService/Searches/GetHistoryNotFound`, this.currentUserPassword());
   }
-  Delete(codeSearch:number) {
+  Delete(codeSearch: number) {
     return this.myHttp.get(`${this.baseUrl}WebService/Searches/Delete?codeSearch=${codeSearch}`);
 
+  }
+  getByStatus(status: number) {
+    return this.myHttp.post(`${this.baseUrl}WebService/Searches/SearchByStatus`,
+      {
+        userPassword: this.currentUserPassword(),
+        status: status
+      });
   }
   register(user: User) {
     return this.myHttp.post(`${this.baseUrl}WebService/User/Register`, user);
@@ -56,12 +71,26 @@ export class SearchService {
   changeStatusToString() {
     this.arrayStatus = [];
     this.searchesForHistory.forEach(element => {
-      if (element.status == 1) {
-        this.arrayStatus.push("נמצא");
+      switch (element.status) {
+        case EStatus.NotFound: {
+          this.arrayStatus.push("מחפש");
+          break;
+        }
+        case EStatus.Found: {
+          this.arrayStatus.push("נמצא");
+          break;
+        }
+        case EStatus.TimeOver: {
+          this.arrayStatus.push("פג תוקף");
+          break;
+        }
+        case EStatus.TimeWait: {
+          this.arrayStatus.push("עדיין לא בתוקף");
+          break;
+        }
+        default:;
       }
-      else {
-        this.arrayStatus.push("מחפש");
-      }
+
     });
   }
   // async openNewSearchModal(dateStart: Date,dateEnd:Date) {
@@ -76,6 +105,6 @@ export class SearchService {
   //   //   myModal.dismiss();
   //   // }, 5000)
   //   const event: any = await this.myModal.onDidDismiss();
- 
+
   // }
 }

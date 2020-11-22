@@ -61,7 +61,7 @@ export class Tab3Page implements OnInit {
       this.Categories = res.Value;
     })
   }
-  categorySelected(item) {
+  categorySelected() {
     
     this.category = new Category;
     this.category.nameCategory = this.nameCategory.substr(0, this.nameCategory.length - 1);

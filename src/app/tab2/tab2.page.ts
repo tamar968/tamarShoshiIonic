@@ -39,7 +39,7 @@ export class Tab2Page implements OnInit {
   uniqueDeviceID = new UniqueDeviceID();
   uuid: any;
 
-  constructor(private shopService: ShopService,private photoService:PhotoService ,private modalCtrl:ModalController, public searchService: SearchService,
+  constructor(private shopService: ShopService, private photoService: PhotoService, private modalCtrl: ModalController, public searchService: SearchService,
     private locationsService: LocationsService, private alertCtrl: AlertController, private toastCtrl: ToastController) {
     this.customPickerOptions = {
       buttons: [{
@@ -53,20 +53,21 @@ export class Tab2Page implements OnInit {
         }
       }]
     };
+    this.updateAllSearchStatus();
     this.locationsService.distance();
     this.uniqueDeviceID.get()
       .then((uuid: any) => this.uuid = uuid);
   }
 
-  
+
 
 
 
   ngOnInit() {
     this.initializeCategories();
     this.photoService.loadSaved();
+    this.updateAllSearchStatus();
     this.getAll();
-
   }
   getAll() {
     this.searchService.getHistoryForUser().subscribe((res: WebResult<SearchDetailsForUser[]>) => {
@@ -88,11 +89,14 @@ export class Tab2Page implements OnInit {
       this.searchService.changeStatusToString();
     })
   }
-
+  updateAllSearchStatus() {
+    this.searchService.updateAllSearchStatus();
+    console.log("updateAllSearchStatus");
+  }
   async remove(item: Search) {
     const alert = await this.alertCtrl.create(<AlertOptions>{
-      title: 'מחיקת חיפוש',
-      message: `<h3> האם אתה בטוח במחיקת חיפוש ה${item.nameProduct}?</h3>`,
+      title: 'מחיקת מטלה',
+      message: `<h3> האם אתה בטוח במחיקת המטלה: ${item.nameProduct}?</h3>`,
       buttons: [
         {
           text: 'לא',

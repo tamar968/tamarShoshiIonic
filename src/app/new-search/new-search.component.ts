@@ -14,6 +14,7 @@ import { User } from '../models/user';
 import { CommonModule } from '@angular/common';
 import { SearchModalService } from '../services/search-modal.service';
 
+
 @Component({
   selector: 'app-new-search',
   templateUrl: './new-search.component.html',
@@ -21,10 +22,10 @@ import { SearchModalService } from '../services/search-modal.service';
 })
 export class NewSearchComponent implements OnInit {
 
-  @Input() fromCalendar = false;
-  // @Input() dateStart:Date;
-  // @Input() dateEnd:Date;
-  
+  @Input() fromCalendar = true;
+  @Input() dateFrom: Date;
+  @Input() dateTo: Date;
+
   shopsFromSearch: ShopDetailsForUsers[];
   Categories: Category[];
   distance: number = 50;
@@ -37,26 +38,43 @@ export class NewSearchComponent implements OnInit {
   customYearValues = [2020, 2016, 2008, 2004, 2000, 1996];
   customDayShortNames = ['s\u00f8n', 'man', 'tir', 'ons', 'tor', 'fre', 'l\u00f8r'];
   customPickerOptions: any;
+  monthShortNames: any;
+  monthNames: string[];
+  dayNames: any;
 
 
-
-  constructor(private shopService: ShopService, private searchService: SearchService,private searchModalService: SearchModalService,
+  constructor(private shopService: ShopService, private searchService: SearchService, private searchModalService: SearchModalService,
     private locationsService: LocationsService, private alertCtrl: AlertController, private toastCtrl: ToastController) {
-
+      this.dateStart = this.dateFrom;
+      console.log(this.dateStart);
+      this.dateEnd = this.dateTo;
     this.customPickerOptions = {
       buttons: [{
-        text: 'Save',
-        handler: () => console.log('Clicked Save!')
+        text: 'שמירה',
+        handler: () => console.log('נשמר')
       }, {
-        text: 'Log',
+        text: 'ביטול',
         handler: () => {
-          console.log('Clicked Log. Do not Dismiss.');
+          console.log('בוטל');
           return false;
         }
       }]
     }
-
-
+    this.monthNames = [
+      'ינואר',
+      'פברואר',
+      'מרץ',
+      'אפריל',
+      'מאי',
+      'יוני',
+      'יולי',
+      'אוגוסט',
+      'ספטמבר',
+      'אוקטובר',
+      'נובמבר',
+      'דצמבר'
+    ]
+    this.dayNames = ['א','ב','ג','ד','ה','ו','ש']
 
     //this.locationsService.distance();
     //     this.uniqueDeviceID.get()
@@ -73,6 +91,9 @@ export class NewSearchComponent implements OnInit {
 
   ngOnInit() {
     this.initializeCategories();
+    this.dateStart = this.dateFrom;
+    console.log(this.dateStart);
+    this.dateEnd = this.dateTo;
   }
   categorySelected() {
     this.category = new Category;
@@ -84,7 +105,7 @@ export class NewSearchComponent implements OnInit {
     });
   }
   searchItem() {
-   this.searchModalService.myModal.dismiss();
+    this.searchModalService.myModal.dismiss();
     if (this.nameProduct == "" || this.category == null) {
       this.presentToastDanger("לא הוזנו נתונים מספיקים");
       return;
@@ -100,6 +121,8 @@ export class NewSearchComponent implements OnInit {
         search.nameProduct = this.nameProduct;
         search.status = 0;
         search.distance = this.distance;
+        search.dateStart=this.dateFrom;
+        search.dateEnd = this.dateTo;
         this.searchService.runSearch(search).subscribe((res: WebResult<any>) => {
           if (res.Status == true) {
             this.presentToastSuccess();
