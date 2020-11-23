@@ -75,7 +75,7 @@ export class LocationsService {
     })
     setTimeout(()=>{
      this.distance();
-    },10000);
+    },3000);
   }
 
   //popup for finding shop

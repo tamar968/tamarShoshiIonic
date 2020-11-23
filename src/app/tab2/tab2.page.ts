@@ -14,6 +14,7 @@ import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
 import { User } from '../models/user';
 import { ModalController } from '@ionic/angular';
 // import { NewSearchComponent } from '../new-search/new-search.component';
+import { EStatus } from '../models/EStatus';
 
 @Component({
   selector: 'app-tab2',
@@ -80,7 +81,6 @@ export class Tab2Page implements OnInit {
     this.searchService.getFound().subscribe((res: WebResult<SearchDetailsForUser[]>) => {
       this.searchService.searchesForHistory = res.Value;
       this.searchService.changeStatusToString();
-
     })
   }
   getNotFound() {
@@ -88,6 +88,15 @@ export class Tab2Page implements OnInit {
       this.searchService.searchesForHistory = res.Value;
       this.searchService.changeStatusToString();
     })
+  }
+  getTimeWait(){
+      this.searchService.getByStatus(EStatus.TimeWait);
+  }
+   getTimeOver(){
+      this.searchService.getByStatus(EStatus.TimeOver);
+  }
+  getByStatus(status){
+    this.searchService.getByStatus(status);
   }
   updateAllSearchStatus() {
     this.searchService.updateAllSearchStatus();
