@@ -18,6 +18,8 @@ import { red } from 'color-name';
 export class LocationsService {
   private baseUrl = 'http://localhost:55505/';
   
+// https://www.latlong.net/‏
+
   Locations  = [
     {lat:32.0884274, lng:34.836800499999981},//הושע 14
     {lat:32.0819798, lng:34.832418899999993},//דסלר 10
@@ -25,7 +27,8 @@ export class LocationsService {
     {lat:32.4718343, lng:34.995714700000008},//רחוב ירושלים
     {lat:32.091035, lng: 34.830035},//רמבם זבוטינסקי
     {lat: 32.078206, lng: 34.832622},//סמינר וולף
-    {lat: 32.081425, lng: 34.840911}//עזרא כהנמן
+    {lat: 32.081425, lng: 34.840911},//עזרא כהנמן
+    {lat: 32.081670, lng: 34.841010}//סמינר אלקיים
   ];
   lng = this.Locations[0].lng;
   lat = this.Locations[0].lat;
@@ -75,7 +78,7 @@ export class LocationsService {
     })
     setTimeout(()=>{
      this.distance();
-    },3000);
+    },10000);
   }
 
   //popup for finding shop
@@ -159,7 +162,7 @@ export class LocationsService {
     await alert.present();
     setTimeout(()=>{
       alert.dismiss();
-    }, 3000);
+    }, 5000);
     
     
   }

@@ -53,7 +53,7 @@
   </ion-card> -->
 
 
-  <ion-list>
+  <ion-list> 
     <ion-item><ion-label color="primary" class="l"> מוצר</ion-label>
     <ion-label color="primary" class="l">קטגוריה</ion-label>
     <ion-label color="primary" class="l">חנות</ion-label>
@@ -80,16 +80,17 @@
       </ion-label>
     </ion-item>
   </ion-list>
-  <ion-fab>
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
     <ion-fab-button  fill="outline" title="סנן">
       <ion-icon name="search"></ion-icon>
     </ion-fab-button>
 
-    <ion-fab-list side="start">
-      <ion-button color="primary" fill="outline" (click)="getFound()">נמצאו</ion-button>
-      <ion-button color="priary" fill="outline" (click)="getNotFound()">לא נמצאו</ion-button>
-      <ion-button color="primary" fill="outline" (click)="getTimeOver()">פג תוקף</ion-button>
-      <ion-button color="primary" fill="outline" (click)="getTimeWait()">עדיין לא בתוקף</ion-button>
+    <ion-fab-list side="bottom" style="align-items: stretch;">
+      <ion-button (click)="getFound()">נמצאו</ion-button>
+      <ion-button  (click)="getNotFound()">לא נמצאו</ion-button>
+      <ion-button  (click)="getTimeOver()">פג תוקף</ion-button>
+      <ion-button  (click)="getTimeWait()">עדיין לא בתוקף</ion-button>
+      <ion-button  (click)="getAll()">הכל</ion-button>
     </ion-fab-list>
   </ion-fab>
 

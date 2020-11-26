@@ -90,10 +90,16 @@ export class Tab2Page implements OnInit {
     })
   }
   getTimeWait(){
-      this.searchService.getByStatus(EStatus.TimeWait);
+      this.searchService.getByStatus(EStatus.TimeWait).subscribe((res: WebResult<SearchDetailsForUser[]>) => {
+        this.searchService.searchesForHistory = res.Value;
+        this.searchService.changeStatusToString();
+      })
   }
    getTimeOver(){
-      this.searchService.getByStatus(EStatus.TimeOver);
+      this.searchService.getByStatus(EStatus.TimeOver).subscribe((res: WebResult<SearchDetailsForUser[]>) => {
+        this.searchService.searchesForHistory = res.Value;
+        this.searchService.changeStatusToString();
+      })
   }
   getByStatus(status){
     this.searchService.getByStatus(status);
