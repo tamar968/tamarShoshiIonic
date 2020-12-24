@@ -23,7 +23,8 @@ export class SearchModalService {
   }
   currentUserPassword()
   {
-    return localStorage.getItem('user');
+    // return localStorage.getItem('user');
+    return "123456";
   }
   searchesForHistory: SearchDetailsForUser[];
   arrayStatus: string[] = [];

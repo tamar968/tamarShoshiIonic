@@ -34,6 +34,7 @@ export class LocationsService {
   lat = this.Locations[0].lat;
   locationChange: Subject<{lat,lng}> = new Subject<{lat,lng}>();
   display: DisplayFound[];
+  alertIsPresent :boolean = false;
   
   constructor(private myHttp: HttpClient, private alertCtrl: AlertController, private searchService: SearchService ) {
     
@@ -41,7 +42,7 @@ export class LocationsService {
   
   checkDistance(lng, lat) {
     var locationAndUser: UserAndLocation = new UserAndLocation();
-    locationAndUser.uuid = localStorage.getItem('user');
+    locationAndUser.uuid ="123456"// localStorage.getItem('user');
     locationAndUser.lng = lng;
     locationAndUser.lat = lat;
 
@@ -71,16 +72,136 @@ export class LocationsService {
     this.lng = this.Locations[rand].lng;
     this.lat = this.Locations[rand].lat;
     this.checkDistance(this.lng,this.lat).subscribe((res:WebResult<SearchInShop[]>)=>{
-      if(res.Value.length>0){         
+      
+      if(res.Value && res.Value.length && !this.alertIsPresent){         
         this.presentAlert(res.Value);           
       }
+      
       this.locationChange.next({lng:this.lng,lat:this.lat});
     })
     setTimeout(()=>{
      this.distance();
-    },10000);
+    },15000);
   }
 
+  // //popup for finding shop
+  //  async presentAlert(searchInShop: SearchInShop[]) {
+  //   /* if (!searchInShop)
+  //    {
+  //     let alert = this.alertCtrl.create(<AlertOptions>{
+  //       header: 'בצע מטלתך כאן!',
+  //       //message: longString,
+  //       inputs: [],
+  //       buttons: [
+  //         {
+  //           text: 'לא עכשיו',
+  //           role: 'cancel',
+  //           handler: () => {
+  //             console.log('NO');
+  //           }
+  //         },
+  //         {
+  //           text: 'ביצעתי',
+  //           handler: () => {console.log('YES'); }
+  //         }
+  //       ]
+  //     });
+  //      (await alert).present();
+  //    //this.alert.present();
+  //     setTimeout(async ()=>{
+  //       (await alert).dismiss();
+  //     }, 5000);
+
+
+  //    }*/
+  //   this.display = [];
+  //   searchInShop.forEach(element => {
+  //     var found = this.display.find(f => f.nameShop == element.NameShop);
+  //     if(found){
+  //       found.productsInShop += element.NameProduct + " ";      
+  //       found.codeSearchesInShop.push(element.CodeSearch);
+  //     }
+  //     else{
+  //       var newDisplay = new DisplayFound();
+  //       newDisplay.nameShop = element.NameShop;
+  //       newDisplay.productsInShop = "";
+  //       newDisplay.productsInShop += element.NameProduct + " ";
+  //       newDisplay.mailShop = element.MailShop;
+  //       newDisplay.codeSearchesInShop = [];
+  //       newDisplay.codeSearchesInShop.push(element.CodeSearch);
+  //       newDisplay.isChecked = false;
+  //       this.display.push(newDisplay);
+  //     }
+  //   });
+    
+
+  //   const theNewInputs = [];
+  //   for (let i = 0; i < this.display.length; i++) {
+  //     theNewInputs.push(
+  //       {
+  //         label: this.display[i].nameShop + " : " +this.display[i].productsInShop,
+  //         type: 'checkbox',
+  //         color: red,
+  //         checked: false,
+  //         handler:(e)=>{
+  //           this.display[i].isChecked = e.checked;
+  //            console.info('value: ',e.checked)
+  //         }
+  //       }
+  //     );
+  //   }
+  //   let alert;
+  //   if (alert){
+  //     console.log('there is an alert');
+  //   }
+  //   else{
+  //     console.log('there is no alert');
+  //   }
+
+  //    alert = this.alertCtrl.create(<AlertOptions>{
+  //     header: 'בצע מטלתך כאן!',
+  //     //message: longString,
+  //     inputs: theNewInputs,
+  //     buttons: [
+  //       {
+  //         text: 'לא עכשיו',
+  //         role: 'cancel',
+  //         handler: () => {
+            
+  //         }
+  //       },
+  //       {
+  //         text: 'ביצעתי',
+  //         handler: () => {
+  //           console.log('Buy clicked');
+  //           this.display.forEach(shopBought => {
+  //             if(shopBought.isChecked == true){
+  //               shopBought.codeSearchesInShop.forEach(code =>{
+  //                 this.foundSearch(code, shopBought.mailShop).subscribe((res: WebResult<any>) => {
+  //                   console.log("Bought" + res.Value);    
+  //                   this.searchService.getHistoryForUser().subscribe((res:WebResult<any>) =>{
+  //                     if(res.Status == true){
+  //                       this.searchService.searchesForHistory = res.Value;
+  //                       this.searchService.changeStatusToString();
+  //                     }
+  //                   })               
+  //                 });
+  //               })              
+  //             }
+              
+  //           });
+            
+
+  //         }
+  //       }
+  //     ]
+  //   });
+  //   //  this.alert.present();
+  //  await alert.present();
+  //   setTimeout(()=>{
+  //     alert.dismiss();
+  //   }, 50000);    
+  // }
   //popup for finding shop
   async presentAlert(searchInShop: SearchInShop[]) {
     this.display = [];
@@ -160,8 +281,10 @@ export class LocationsService {
       ]
     });
     await alert.present();
+    this.alertIsPresent = true;
     setTimeout(()=>{
       alert.dismiss();
+      this.alertIsPresent = false;
     }, 5000);
     
     

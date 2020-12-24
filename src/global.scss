@@ -9,6 +9,20 @@
 @import '~@ionic/angular/css/text-alignment.css';
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
-img{
-    right: 0;
+@import './theme/variables.scss';
+ion-header{
+    height: 90px;
+    ion-toolbar{
+        height: 100%;
+    }
+}
+img.logo{
+    width:180px;
+}
+ion-tabs{
+    padding-top: 90px;
+}
+ion-title{
+    text-align: center;
+    color:--ion-color-primary;
 }
