@@ -86,7 +86,7 @@ export class SearchService {
           break;
         }
         case EStatus.TimeWait: {
-          this.arrayStatus.push("עדיין לא בתוקף");
+          this.arrayStatus.push("בהמתנה");
           break;
         }
         default:;

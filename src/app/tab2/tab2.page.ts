@@ -5,7 +5,7 @@ import { Search } from '../models/Search';
 import { WebResult } from '../models/WebResult';
 import { SearchService } from '../services/search.service';
 import { SearchDetailsForUser } from '../models/search-details-for-user';
-import { AlertController, ToastController } from '@ionic/angular';
+import { ActionSheetController, AlertController, ToastController } from '@ionic/angular';
 import { AlertOptions } from '@ionic/core';
 import { Category } from '../models/Category';
 import { ShopDetailsForUsers } from '../models/ShopDetailsForUsers';
@@ -41,7 +41,7 @@ export class Tab2Page implements OnInit {
   uuid: any;
 
   constructor(private shopService: ShopService, private photoService: PhotoService, private modalCtrl: ModalController, public searchService: SearchService,
-    private locationsService: LocationsService, private alertCtrl: AlertController, private toastCtrl: ToastController) {
+    private locationsService: LocationsService, private alertCtrl: AlertController,public actionSheetController: ActionSheetController, private toastCtrl: ToastController) {
     this.customPickerOptions = {
       buttons: [{
         text: 'Save',
@@ -217,4 +217,55 @@ export class Tab2Page implements OnInit {
     });
     toast.present();
   }
+  async presentActionSheet() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'סינון',
+      cssClass: 'my-custom-class',
+      buttons: [{
+        text: 'נמצאו',
+         
+        icon: 'search',
+        handler: () => {
+         this.getFound();
+        }
+      },{
+        text: 'לא נמצאו',
+         
+        icon: 'search',
+        handler: () => {
+         this.getNotFound();
+        }
+      }, {
+        text: 'פג תוקף',
+         
+        icon: 'search',
+        handler: () => {
+         this.getTimeOver();
+        }
+      },{
+        text: 'בהמתנה',
+         
+        icon: 'search',
+        handler: () => {
+         this.getTimeWait();
+        }
+      },{
+        text: 'הכל',
+         
+        icon: 'search',
+        handler: () => {
+         this.getAll();
+        }
+      }, {
+        text: 'סגור',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
+  }
+
 }

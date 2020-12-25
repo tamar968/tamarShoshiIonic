@@ -53,6 +53,7 @@
   </ion-card> -->
 
  <ion-title class=""> רשימת המטלות</ion-title>
+ <ion-button (click)="presentActionSheet()" expand="block">סנן</ion-button>
   <ion-list> 
     <ion-item><ion-label color="primary" class="l"> מוצר</ion-label>
     <ion-label color="primary" class="l">קטגוריה</ion-label>
@@ -80,7 +81,7 @@
       </ion-label>
     </ion-item>
   </ion-list>
-  <ion-fab vertical="top" horizontal="end" slot="fixed">
+  <!-- <ion-fab vertical="top" horizontal="end" slot="fixed">
     <ion-fab-button  fill="outline" title="סנן">
       <ion-icon name="search"></ion-icon>
     </ion-fab-button>
@@ -92,6 +93,6 @@
       <ion-button  (click)="getTimeWait()">עדיין לא בתוקף</ion-button>
       <ion-button  (click)="getAll()">הכל</ion-button>
     </ion-fab-list>
-  </ion-fab>
+  </ion-fab> -->
 
 </ion-content>
