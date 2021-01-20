@@ -26,3 +26,13 @@ ion-title{
     text-align: center;
     color:--ion-color-primary;
 }
+ ion-list ion-item {
+    &:focus-within{
+    color: var(--ion-color-secondary);
+}
+}
+
+.sc-ion-modal-md{
+    width: 76% !important;
+    height: 67% !important;
+}
