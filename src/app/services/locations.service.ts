@@ -11,6 +11,7 @@ import { SearchService } from './search.service';
 import { Subject } from 'rxjs';
 import { DisplayFound } from '../models/display-found';
 import { red } from 'color-name';
+import { User } from '../models/User';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class LocationsService {
   private baseUrl = 'http://localhost:55505/';
   
 // https://www.latlong.net/‏
-
+  showNotification = true;
   Locations  = [
     {lat:32.0884274, lng:34.836800499999981},//הושע 14
     {lat:32.0819798, lng:34.832418899999993},//דסלר 10
@@ -42,9 +43,20 @@ export class LocationsService {
   
   checkDistance(lng, lat) {
     var locationAndUser: UserAndLocation = new UserAndLocation();
-    locationAndUser.uuid ="123456"// localStorage.getItem('user');
-    locationAndUser.lng = lng;
-    locationAndUser.lat = lat;
+    let userDetailsJson =  localStorage.getItem('userDetails');
+   
+    if(!userDetailsJson){
+      locationAndUser.uuid ="123456";
+      locationAndUser.lng = lng;
+      locationAndUser.lat = lat;      
+    }
+    else{
+      let userDetails: User = JSON.parse(userDetailsJson);
+      locationAndUser.uuid = userDetails.passwordUser;
+      locationAndUser.lng = lng;
+      locationAndUser.lat = lat;
+    }
+      
 
     return this.myHttp.post(`${this.baseUrl}WebService/Searches/CheckDistance`, locationAndUser);
   }
@@ -68,6 +80,7 @@ export class LocationsService {
     //       })
     //   });
     // }
+    if(this.showNotification){
     var rand = Math.floor((Math.random() * this.Locations.length));
     this.lng = this.Locations[rand].lng;
     this.lat = this.Locations[rand].lat;
@@ -82,6 +95,7 @@ export class LocationsService {
     setTimeout(()=>{
      this.distance();
     },15000);
+   }
   }
 
   // //popup for finding shop

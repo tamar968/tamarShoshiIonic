@@ -23,8 +23,12 @@ export class SearchModalService {
   }
   currentUserPassword()
   {
-    // return localStorage.getItem('user');
-    return "123456";
+    let userDetailsJson =  localStorage.getItem('userDetails');
+    if(!userDetailsJson){
+      return "123456";
+    }
+    let userDetails: User = JSON.parse(userDetailsJson);
+    return userDetails.passwordUser;
   }
   searchesForHistory: SearchDetailsForUser[];
   arrayStatus: string[] = [];

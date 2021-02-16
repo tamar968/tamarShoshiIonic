@@ -28,10 +28,13 @@ export class AppComponent implements OnInit{
   ) {
     
     this.initializeApp();
-    if (localStorage.getItem("user") == null)
+    if (localStorage.getItem("userDetails") == null)
       this.presentAlert();
-    else
-      this.locationsService.distance();
+    else{
+      this.user = JSON.parse(localStorage.getItem("userDetails"));
+            this.locationsService.distance();
+    }
+
     
   }
 
@@ -43,7 +46,7 @@ export class AppComponent implements OnInit{
     });
   }
   //For register!!!!!!!!!!!---------------------------
-  user: User = new User();
+  user: User;
   async presentAlert() {
     const alert = await this.alertCtrl.create(<AlertOptions>{
       title: 'הרשמה',
@@ -77,8 +80,10 @@ export class AppComponent implements OnInit{
           handler: data => {
             if (data.nameUser && data.mailUser && data.phoneUser && data.passwordUser) {
               // logged in!
-              localStorage.setItem('user', data.passwordUser);
+              localStorage.setItem('userDetails', JSON.stringify(data));
+
               console.log(localStorage.user);
+              this.user = new User();
               this.user.nameUser = data.nameUser;
               this.user.mailUser = data.mailUser;
               this.user.phoneUser = data.phoneUser;
