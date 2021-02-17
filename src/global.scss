@@ -16,15 +16,29 @@ ion-header{
         height: 100%;
     }
 }
+h2{
+    align-items: center;
+    display: flex;
+    color:var(--ion-color-primary);
+}
+.icon{
+    width: 45px;
+    margin: 0 5px;
+}
 img.logo{
     width:180px;
+}
+.hello-user{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 ion-tabs{
     padding-top: 90px;
 }
 ion-title{
     text-align: center;
-    color:--ion-color-primary;
+    color:var(--ion-color-primary);
 }
  ion-list ion-item {
     &:focus-within{

@@ -1,10 +1,12 @@
-<ion-app>
-  <ion-header role="banner" class="ios header-ios header-collapse-none hydrated" color="primary">
+<ion-app dir="rtl">
+  <ion-header role="banner" class="ios header-ios header-collapse-none hydrated" color="primary" >
     <ion-toolbar color="primary" >
-        <ion-toggle color="secondary" slot="end" (ngModelChange)="updateNotifictionStatus()"></ion-toggle>
-    <img alt="logo" class="logo" src="../../assets/icon/favicon.PNG">
-    <span>שלום <span>{{user.nameUser}}</span></span>
-
+      <div slot="end" class="hello-user">
+      <img src="../assets/icon/png/364-user.png" class="icon">
+      <span >שלום <span>{{user.nameUser}}</span></span>
+    </div>
+        <ion-toggle color="secondary" slot="start" (ngModelChange)="updateNotifictionStatus()"></ion-toggle>
+    <!-- <img alt="logo" class="logo" src="../../assets/icon/favicon.PNG"> -->
     </ion-toolbar> 
 </ion-header>
   <ion-router-outlet></ion-router-outlet>
