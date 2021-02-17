@@ -115,5 +115,7 @@ export class AppComponent implements OnInit{
     });
     toast.present();
   }
-
+  updateNotifictionStatus() {
+    this.locationsService.showNotification = !this.locationsService.showNotification;
+  }
 }

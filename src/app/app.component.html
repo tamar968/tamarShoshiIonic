@@ -1,12 +1,10 @@
 <ion-app>
   <ion-header role="banner" class="ios header-ios header-collapse-none hydrated" color="primary">
     <ion-toolbar color="primary" >
+        <ion-toggle color="secondary" slot="end" (ngModelChange)="updateNotifictionStatus()"></ion-toggle>
     <img alt="logo" class="logo" src="../../assets/icon/favicon.PNG">
     <span>שלום <span>{{user.nameUser}}</span></span>
-   
-<!--       
-      <ion-title slot="start">הצג התראות</ion-title>
-      <ion-toggle color="dark" slot="end"></ion-toggle> -->
+
     </ion-toolbar> 
 </ion-header>
   <ion-router-outlet></ion-router-outlet>

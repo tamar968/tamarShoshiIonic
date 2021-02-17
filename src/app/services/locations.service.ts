@@ -20,7 +20,7 @@ export class LocationsService {
   private baseUrl = 'http://localhost:55505/';
   
 // https://www.latlong.net/‏
-  showNotification = true;
+  showNotification = false;
   Locations  = [
     {lat:32.0884274, lng:34.836800499999981},//הושע 14
     {lat:32.0819798, lng:34.832418899999993},//דסלר 10
