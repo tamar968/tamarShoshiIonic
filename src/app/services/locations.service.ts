@@ -80,7 +80,6 @@ export class LocationsService {
     //       })
     //   });
     // }
-    if(this.showNotification){
     var rand = Math.floor((Math.random() * this.Locations.length));
     this.lng = this.Locations[rand].lng;
     this.lat = this.Locations[rand].lat;
@@ -95,7 +94,6 @@ export class LocationsService {
     setTimeout(()=>{
      this.distance();
     },15000);
-   }
   }
 
   // //popup for finding shop
@@ -218,8 +216,10 @@ export class LocationsService {
   // }
   //popup for finding shop
   async presentAlert(searchInShop: SearchInShop[]) {
-    this.display = [];
-    searchInShop.forEach(element => {
+    console.log("alert notification status "+ this.showNotification);
+    if(this.showNotification){
+      this.display = [];
+      searchInShop.forEach(element => {
       var found = this.display.find(f => f.nameShop == element.NameShop);
       if(found){
         found.productsInShop += element.NameProduct + " ";      
@@ -236,7 +236,7 @@ export class LocationsService {
         newDisplay.isChecked = false;
         this.display.push(newDisplay);
       }
-    });
+      });
     
 
     const theNewInputs = [];
@@ -303,7 +303,7 @@ export class LocationsService {
       this.alertIsPresent = false;
     }, 5000);
     
-    
+  }
   }
   UpdateSearchStatus(codeSearch,status, mailShop) {
     return this.myHttp.post(`${this.baseUrl}WebService/Searches/Found`, { codeSearch: codeSearch,status:status, mailShop: mailShop });
