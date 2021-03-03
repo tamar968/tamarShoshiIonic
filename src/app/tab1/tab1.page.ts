@@ -30,6 +30,10 @@ export class Tab1Page implements OnInit {
   calendar = new CalendarComponent(new CalendarService())
   optionsRange: CalendarComponentOptions = {
     pickMode: 'range',
+    //monthFormat: 'YYYY 年 MM 月 ',
+    weekdays: ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ש'],
+    weekStart: 1,
+    // defaultDate: new Date()
   };
   
   from: Date;
@@ -222,10 +226,11 @@ export class Tab1Page implements OnInit {
   
   async openModal(dateStart: Date,dateEnd:Date) {
    
-this.dateRange.from=new Date();
-this.dateRange.to= new Date();
+this.dateRange.from;
+this.dateRange.to;
 
     const myModal = await this.modalCtrl.create({
+      
       component: NewSearchComponent,
       componentProps: { dateFrom:dateStart, dateTo:dateEnd }
     });

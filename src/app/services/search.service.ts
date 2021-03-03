@@ -18,6 +18,13 @@ export class SearchService {
 
   private baseUrl = 'http://localhost:55505/';
   myModal: HTMLIonModalElement;
+  statusDict={
+    0:"מחפש",
+    1:"נמצא",
+    2:"נמחק",
+    3:"בהמתנה",
+    4:"פג תוקף"
+  }
   constructor(private myHttp: HttpClient, private modalCtrl: ModalController) {
 
   }

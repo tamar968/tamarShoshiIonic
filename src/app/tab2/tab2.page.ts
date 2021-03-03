@@ -134,6 +134,29 @@ export class Tab2Page implements OnInit {
     await alert.present();
   }
 
+  async showDetails(item: SearchDetailsForUser) {
+    const alert = await this.alertCtrl.create(<AlertOptions>{
+      title: item.nameProduct,
+      message: `
+      <h3>פרטים נוספים</h3>
+      <div class="ta-start">
+     <label class="title-info">מטלה:</label><label>${item.NameProduct}</label><br/>
+     <label class="title-info">תאריך התחלה:</label><label>${item.dateStart}</label><br/>
+     <label class="title-info">תאריך סיום:</label><label>${item.dateEnd}</label><br/>
+     <label class="title-info">סטטוס:</label><label>${this.searchService.statusDict[item.Status]}</label><br/>
+    </div>
+      `,
+      buttons: [
+        {
+          text: 'סגירה',
+          handler: () => {
+            console.log('מתחרט');
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
 
   initializeCategories() {
     this.searchService.GetCategories().subscribe((res: WebResult<Category[]>) => {
@@ -175,7 +198,6 @@ export class Tab2Page implements OnInit {
             this.searchService.getHistoryForUser().subscribe((res: WebResult<any>) => {
               this.searchService.searchesForHistory = res.Value;
               this.searchService.changeStatusToString();
-
             })
             //reset the form
             this.category = null;

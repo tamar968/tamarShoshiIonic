@@ -20,6 +20,7 @@ h2{
     align-items: center;
     display: flex;
     color:var(--ion-color-primary);
+    font-size: 22px;
 }
 .icon{
     width: 45px;
@@ -33,6 +34,9 @@ img.logo{
     flex-direction: column;
     align-items: center;
 }
+// .tabs-inner{
+//     margin: 15px;
+// }
 ion-tabs{
     padding-top: 90px;
 }
@@ -40,13 +44,31 @@ ion-title{
     text-align: center;
     color:var(--ion-color-primary);
 }
+ion-content{
+  padding: 15px;
+}
  ion-list ion-item {
     &:focus-within{
     color: var(--ion-color-secondary);
 }
 }
 
-.sc-ion-modal-md{
-    width: 76% !important;
-    height: 67% !important;
+.modal-wrapper {
+    width: 90vw !important;
+    height: 65vh !important;
+}
+
+label{
+    font-size: medium;
+}
+
+.title-info{
+    font-weight: bolder;
+    color: var(--ion-color-primary);    
+}
+.ta-start{
+    text-align: start;
+}
+.like{
+    background-color: red;
 }

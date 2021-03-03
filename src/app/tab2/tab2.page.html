@@ -55,30 +55,37 @@
  <h2 class="">     <img src="../../assets/icon/png/278-list.png" class="icon">מטלות שלי</h2>
  <ion-button (click)="presentActionSheet()" expand="block" color="secondary" >סנן</ion-button>
   <ion-list> 
-    <ion-item><ion-label color="primary" class="l"> מוצר</ion-label>
-    <ion-label color="primary" class="l">קטגוריה</ion-label>
-    <ion-label color="primary" class="l">חנות</ion-label>
-    <ion-label color="primary" class="l">מצב </ion-label>
+    <ion-item><ion-label color="primary" class="l"> מטלה</ion-label>
+    <!-- <ion-label color="primary" class="l">קטגוריה</ion-label>
+    <ion-label color="primary" class="l">חנות</ion-label>-->
+    <ion-label color="primary" class="l">סטטוס</ion-label> 
+    <ion-label color="primary" class="l">פרטים</ion-label> 
     <ion-label color="primary" class="l">מחק </ion-label>
   </ion-item>
     <ion-item *ngFor="let item of this.searchService.searchesForHistory ;let i=index">
       <ion-label>
-        <p title="{{item.nameProduct}}">{{item.nameProduct}}</p>
+        <p title="{{item.nameProduct}}">{{item.NameProduct}}</p>
       </ion-label>
-      <ion-label>
+      <!-- <ion-label>
         <p title="{{item.nameCategory}}">{{item.nameCategory}}</p>
-      </ion-label>
-      <ion-label>
+      </ion-label> -->
+      <!-- <ion-label>
         <p title="{{item.nameShop}}">{{item.nameShop}}</p>
+      </ion-label> -->
+      <ion-label>
+        <p>{{this.searchService.statusDict[item.Status]}}</p>
       </ion-label>
       <ion-label>
-        <p>{{this.searchService.arrayStatus[i]}}</p>
+        <ion-button id="b" fill="more" color="medium" (click)="showDetails(item)">
+          <ion-icon name="more" slot="icon-only" md="md-more"></ion-icon>
+        </ion-button>
       </ion-label>
       <ion-label>
         <ion-button id="b" fill="clear" color="medium" (click)="remove(item)">
           <ion-icon name="trash" slot="icon-only" md="md-trash"></ion-icon>
         </ion-button>
       </ion-label>
+
     </ion-item>
   </ion-list>
   <!-- <ion-fab vertical="top" horizontal="end" slot="fixed">

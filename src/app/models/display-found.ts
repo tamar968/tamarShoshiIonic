@@ -1,4 +1,6 @@
-export class DisplayFound {
+import { Search } from './Search';
+import { ShopDetailsForUsers } from './ShopDetailsForUsers';
+export class DisplayFound extends ShopDetailsForUsers {
     nameShop: string;
     mailShop: string;
     productsInShop: string;

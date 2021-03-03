@@ -13,7 +13,7 @@ import { AlertOptions } from '@ionic/core';
 import { User } from '../models/user';
 import { CommonModule } from '@angular/common';
 import { SearchModalService } from '../services/search-modal.service';
-
+//calender is: https://www.positronx.io/ionic-calendar-ui-tutorial-examples-from-scratch/
 
 @Component({
   selector: 'app-new-search',
@@ -104,6 +104,9 @@ export class NewSearchComponent implements OnInit {
       }
     });
   }
+  closeModal(){
+    this.searchModalService.myModal.dismiss();
+  }
   searchItem() {
     this.searchModalService.myModal.dismiss();
     if (this.nameProduct == "" || this.category == null) {
@@ -128,7 +131,8 @@ export class NewSearchComponent implements OnInit {
             this.presentToastSuccess();
             this.searchService.getHistoryForUser().subscribe((res: WebResult<any>) => {
               this.searchService.searchesForHistory = res.Value;
-              this.searchService.changeStatusToString();
+              debugger;
+              //this.searchService.changeStatusToString();
 
             })
             //reset the form

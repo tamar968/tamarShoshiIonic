@@ -7,6 +7,7 @@
   </ion-toolbar>
 </ion-header> -->
 <ion-content>
+  <div class="glass">
   <h2 class="">
       <img src="../../assets/icon/png/354-map location.png" class="icon">
     מפה</h2>
@@ -18,11 +19,12 @@
       </ion-select-option>
     </ion-select>
   </ion-item>
+</div>
   <agm-map [fitBounds]="this.shopsForCategory&&this.shopsForCategory.length>1" [latitude]="latitude"
     [longitude]="longitude" [zoom]="zoom">
     <agm-marker class="img" [agmFitBounds]="true" [latitude]="latitude" [longitude]="longitude" [iconUrl]="
     {
-      url: '../assets/icon/location.png',
+      url: '../../assets/icon/png/353-placeholder.png',
       scaledSize: {
           width: 70,
           height: 70

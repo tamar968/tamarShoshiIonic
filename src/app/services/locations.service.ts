@@ -20,7 +20,7 @@ export class LocationsService {
   private baseUrl = 'http://localhost:55505/';
   
 // https://www.latlong.net/‏
-  showNotification = false;
+  showNotification = true;
   Locations  = [
     {lat:32.0884274, lng:34.836800499999981},//הושע 14
     {lat:32.0819798, lng:34.832418899999993},//דסלר 10
@@ -241,12 +241,14 @@ export class LocationsService {
 
     const theNewInputs = [];
     for (let i = 0; i < this.display.length; i++) {
+     // if(this.display[i].codeSearchesInShop)
       theNewInputs.push(
         {
           label: this.display[i].nameShop + " : " +this.display[i].productsInShop,
           type: 'checkbox',
           color: red,
           checked: false,
+          cssClass: 'like',
           handler:(e)=>{
             this.display[i].isChecked = e.checked;
              console.info('value: ',e.checked)

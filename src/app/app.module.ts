@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { FormsModule} from '@angular/forms'
@@ -42,8 +42,8 @@ CalendarModule,
     SplashScreen,
     Camera,
     // Calendar,
-
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: LOCALE_ID, useValue: 'he_IL' },
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
   ],
   bootstrap: [AppComponent]
 })

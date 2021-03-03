@@ -1,7 +1,8 @@
-export class SearchDetailsForUser {
+import { Search } from './Search';
+export class SearchDetailsForUser extends Search {
     codeSearch: number;
-    nameProduct: string;
+    NameProduct: string;
     nameCategory: string;
-    status: number;
+    Status: number;
     nameShop: string;
 }
