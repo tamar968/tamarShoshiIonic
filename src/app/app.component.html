@@ -5,7 +5,13 @@
       <img src="../assets/icon/png/364-user.png" class="icon">
       <span >שלום <span>{{user.nameUser}}</span></span>
     </div>
-        <ion-toggle color="secondary" slot="start" (ngModelChange)="updateNotifictionStatus()"></ion-toggle>
+    <div slot="start" >
+      <ion-toggle color="secondary" slot="start"  checked [ngModel]="locationsService.showNotification" (ngModelChange)="updateNotifictionStatus()"></ion-toggle>
+      <span [hidden]="!locationsService.showNotification">התראה פועלת</span>
+      <span [hidden]="locationsService.showNotification">התראה כבויה</span>
+    </div>
+
+
     <!-- <img alt="logo" class="logo" src="../../assets/icon/favicon.PNG"> -->
     </ion-toolbar> 
 </ion-header>

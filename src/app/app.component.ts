@@ -23,7 +23,7 @@ export class AppComponent implements OnInit{
     private statusBar: StatusBar,
     private searchService: SearchService,
     private alertCtrl: AlertController,
-    private locationsService: LocationsService,
+    public locationsService: LocationsService,
     public toastController: ToastController
   ) {
     
