@@ -31,7 +31,7 @@ import { from } from 'rxjs';
     IonicStorageModule.forRoot(),
     HttpClientModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyDxG3TDFOXmRB5XpG9Yfh40VCs5Aqr93jo',
+      apiKey: 'AIzaSyBHjD1ZZO5w9LmCuOjejbHiQq8Lkd94qSk',
       libraries: ['places']
     }),
 CalendarModule,

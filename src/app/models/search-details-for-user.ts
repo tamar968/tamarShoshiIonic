@@ -1,6 +1,6 @@
 import { Search } from './Search';
 export class SearchDetailsForUser extends Search {
-    codeSearch: number;
+    CodeSearch: number;
     NameProduct: string;
     nameCategory: string;
     Status: number;

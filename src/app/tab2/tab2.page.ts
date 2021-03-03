@@ -108,10 +108,10 @@ export class Tab2Page implements OnInit {
     this.searchService.updateAllSearchStatus();
     console.log("updateAllSearchStatus");
   }
-  async remove(item: Search) {
+  async remove(item: SearchDetailsForUser) {
     const alert = await this.alertCtrl.create(<AlertOptions>{
       title: 'מחיקת מטלה',
-      message: `<h3> האם אתה בטוח במחיקת המטלה: ${item.nameProduct}?</h3>`,
+      message: `<h3> האם אתה בטוח במחיקת המטלה: ${item.NameProduct}?</h3>`,
       buttons: [
         {
           text: 'לא',
@@ -122,7 +122,7 @@ export class Tab2Page implements OnInit {
         {
           text: 'כן',
           handler: () => {
-            this.searchService.Delete(item.codeSearch).subscribe((res: WebResult<any>) => {
+            this.searchService.Delete(item.CodeSearch).subscribe((res: WebResult<any>) => {
               console.log("after delete" + res.Message);
               this.getAll();
             });
