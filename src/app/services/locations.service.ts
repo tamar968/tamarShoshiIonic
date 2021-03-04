@@ -25,7 +25,7 @@ export class LocationsService {
     {lat:32.0884274, lng:34.836800499999981},//הושע 14
     {lat:32.0819798, lng:34.832418899999993},//דסלר 10
     {lat:32.086637, lng:34.829819999999927},//רבי עקיבא
-    {lat:32.4718343, lng:34.995714700000008},//רחוב ירושלים
+   // {lat:32.4718343, lng:34.995714700000008},//רחוב ירושלים
     {lat:32.091035, lng: 34.830035},//רמבם זבוטינסקי
     {lat: 32.078206, lng: 34.832622},//סמינר וולף
     {lat: 32.081425, lng: 34.840911},//עזרא כהנמן
@@ -234,6 +234,7 @@ export class LocationsService {
         newDisplay.codeSearchesInShop = [];
         newDisplay.codeSearchesInShop.push(element.CodeSearch);
         newDisplay.isChecked = false;
+        newDisplay.isFavorite = element.IsFavorite;
         this.display.push(newDisplay);
       }
       });
@@ -244,7 +245,7 @@ export class LocationsService {
      // if(this.display[i].codeSearchesInShop)
       theNewInputs.push(
         {
-          label: this.display[i].nameShop + " : " +this.display[i].productsInShop,
+          label:(this.display[i].isFavorite?' ❤ ':'')+ this.display[i].nameShop + " : " +this.display[i].productsInShop ,
           type: 'checkbox',
           color: red,
           checked: false,

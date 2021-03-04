@@ -6,4 +6,5 @@ export class DisplayFound extends ShopDetailsForUsers {
     productsInShop: string;
     codeSearchesInShop: number[];
     isChecked: boolean;
+    isFavorite: boolean;
 }

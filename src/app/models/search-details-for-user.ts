@@ -5,4 +5,5 @@ export class SearchDetailsForUser extends Search {
     nameCategory: string;
     Status: number;
     nameShop: string;
+    IsFavoriteShop:boolean;
 }
