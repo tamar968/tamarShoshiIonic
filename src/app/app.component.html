@@ -1,20 +1,22 @@
 <ion-app dir="rtl">
-  <ion-header role="banner" class="ios header-ios header-collapse-none hydrated" color="primary" >
-    <ion-toolbar color="primary" >
+  <ion-header role="banner" class="ios header-ios header-collapse-none hydrated" color="primary">
+    <ion-toolbar color="primary">
+
       <div slot="end" class="hello-user">
-      <img src="../assets/icon/png/364-user.png" class="icon">
-      <span >שלום <span>{{user.nameUser}}</span></span>
-    </div>
-    <div slot="start" >
-      <ion-toggle color="secondary" slot="start"  checked [ngModel]="locationsService.showNotification" (ngModelChange)="updateNotifictionStatus()"></ion-toggle>
-      <span [hidden]="!locationsService.showNotification">התראה פועלת</span>
-      <span [hidden]="locationsService.showNotification">התראה כבויה</span>
-    </div>
+        <img src="../assets/icon/png/364-user.png" class="icon">
+        <span>שלום <span>{{user.nameUser}}</span></span>
+      </div>
+      <div slot="start" [hidden]="!locationsService">
+        <ion-toggle color="secondary" slot="start" checked [ngModel]="locationsService.showNotification"
+          (ngModelChange)="updateNotifictionStatus()"></ion-toggle>
+        <span [hidden]=" !(locationsService.showNotification)">התראה פועלת</span>
+        <span [hidden]=" locationsService.showNotification">התראה כבויה</span>
+      </div>
 
 
-    <!-- <img alt="logo" class="logo" src="../../assets/icon/favicon.PNG"> -->
-    </ion-toolbar> 
-</ion-header>
-<ion-icon ></ion-icon>
+      <!-- <img alt="logo" class="logo" src="../../assets/icon/favicon.PNG"> -->
+    </ion-toolbar>
+  </ion-header>
+  <ion-icon></ion-icon>
   <ion-router-outlet></ion-router-outlet>
 </ion-app>
