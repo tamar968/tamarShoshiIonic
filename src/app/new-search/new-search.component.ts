@@ -131,7 +131,6 @@ export class NewSearchComponent implements OnInit {
             this.presentToastSuccess();
             this.searchService.getHistoryForUser().subscribe((res: WebResult<any>) => {
               this.searchService.searchesForHistory = res.Value;
-              debugger;
               //this.searchService.changeStatusToString();
 
             })
