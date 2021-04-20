@@ -4,9 +4,9 @@
 
       <div slot="end" class="hello-user">
         <img src="../assets/icon/png/364-user.png" class="icon">
-        <span>שלום <span>{{user.nameUser}}</span></span>
+        <span>שלום <span>{{user && user.nameUser !== ''? user.nameUser : 'אורח'}}</span></span>
       </div>
-      <div slot="start" [hidden]="!locationsService">
+      <div slot="start" [hidden]="!user" class="hello-user">
         <ion-toggle color="secondary" slot="start" checked [ngModel]="locationsService.showNotification"
           (ngModelChange)="updateNotifictionStatus()"></ion-toggle>
         <span [hidden]=" !(locationsService.showNotification)">התראה פועלת</span>
