@@ -78,3 +78,6 @@ label{
 .alert-checkbox-icon{
     margin: 10px 3px !important;
 }
+[aria-checked="true"].alert-radio-button {
+    background:  var(--ion-color-primary);  
+}

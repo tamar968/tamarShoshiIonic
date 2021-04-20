@@ -46,6 +46,7 @@
     "ion2-calendar": "^3.0.0-rc.0",
     "ionic2-calendar": "^0.6.6",
     "moment": "^2.29.1",
+    "node-sass": "^4.14.1",
     "rxjs": "^6.3.3",
     "zone.js": "~0.8.26"
   },
