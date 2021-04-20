@@ -22,14 +22,15 @@ export class LocationsService {
 // https://www.latlong.net/‏
   showNotification = true;
   Locations  = [
-    {lat:32.0884274, lng:34.836800499999981},//הושע 14
+   /* {lat:32.0884274, lng:34.836800499999981},//הושע 14
     {lat:32.0819798, lng:34.832418899999993},//דסלר 10
     {lat:32.086637, lng:34.829819999999927},//רבי עקיבא
    // {lat:32.4718343, lng:34.995714700000008},//רחוב ירושלים
     {lat:32.091035, lng: 34.830035},//רמבם זבוטינסקי
     {lat: 32.078206, lng: 34.832622},//סמינר וולף
-    {lat: 32.081425, lng: 34.840911},//עזרא כהנמן
-    {lat: 32.081670, lng: 34.841010}//סמינר אלקיים
+    {lat: 32.081425, lng: 34.840911},//עזרא כהנ
+    {lat: 32.081670, lng: 34.841010}//סמינר אלקיים*/
+    {lat:32.088770, lng:34.839180}
   ];
   lng = this.Locations[0].lng;
   lat = this.Locations[0].lat;
@@ -61,25 +62,6 @@ export class LocationsService {
     return this.myHttp.post(`${this.baseUrl}WebService/Searches/CheckDistance`, locationAndUser);
   }
   distance() {
-    // if (navigator) {
-    //   navigator.geolocation.watchPosition(pos => {
-    //     this.lng = +pos.coords.longitude;
-    //     this.lat = +pos.coords.latitude;
-       
-    //       console.log(this.lat + " " + this.lng);
-    //       this.checkDistance(this.lng, this.lat).subscribe((res: WebResult<SearchInShop[]>) => {
-    //         //if res.value is not null, then we found a shop
-
-    //         if (res.Value.length > 0) {
-    //           console.log(res.Value);
-    //           res.Value.forEach(searchFound => {
-    //             this.presentAlert(searchFound);
-    //           });
-              
-    //         }
-    //       })
-    //   });
-    // }
     var rand = Math.floor((Math.random() * this.Locations.length));
     this.lng = this.Locations[rand].lng;
     this.lat = this.Locations[rand].lat;
