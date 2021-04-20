@@ -271,7 +271,8 @@ export class Tab2Page implements OnInit {
         handler: () => {
          this.getTimeWait();
         }
-      },{
+      }
+      ,{
         text: 'הכל',
          
         icon: 'search',
